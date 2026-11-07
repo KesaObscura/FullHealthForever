@@ -37,8 +37,28 @@ A wrong "press it now" is worse than no hint: fewer hints, but right ones. Roles
 (lower threshold, defensive cooldown first), solo / damage (potion or bandage earlier),
 healer (own heal first, potion last).
 
+## Owner decisions in force (7 Nov 2026)
+
+- Name and folder `FullHealthForever` / "Full Health Forever"; own CurseForge page (owner creates
+  it at 0.1); family look with Full Mana Forever; icon = FMF's flask in red (`icon.tga`, a
+  present from a colleague; previews in `docs/images/`).
+- Bar placed apart from FMF by default; "health 2 s ago" shadow on by default for now;
+  thresholds 35 % (aggro on you) / 25 % (no aggro) / 30 % (tank) as the start.
+- Plan: `docs/plan.md`; facts for both addons: `docs/forever-addon-api.md`; player reviews:
+  `docs/reviews/`.
+- SEO and store pages as strong as FMF's, for both addons: `docs/store.md` (keywords, GitHub
+  About / topics / settings, CurseForge summary draft, ideas for FMF). FMF itself is changed only
+  in its own sessions.
+
 ## Keep in sync on every user-visible change
 
 - `CHANGELOG.md`: headings `**Full Health Forever X.Y.Z**`.
 - `README.md`: commands table.
 - Version in `FullHealthForever.toc` and `ns.VERSION` in `Core.lua` (a test checks both).
+- From 0.1: `CURSEFORGE.md` (the CurseForge description; the owner copies it by hand).
+
+## Releases (from 0.1, as FMF)
+
+- The owner uploads to CurseForge by hand, release type **Release**, game version 1.60.1.
+- GitHub release: the owner creates the tag `vX.Y.Z`; title "Full Health Forever X.Y.Z – WoW
+  Forever health addon"; zip `FullHealthForever-X.Y.Z.zip` (no hash).

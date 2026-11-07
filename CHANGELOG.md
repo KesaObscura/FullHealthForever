@@ -1,5 +1,10 @@
 # Changelog
 
+**Full Health Forever 0.0.4** (test build, not for CurseForge)
+
+- Own icon in the addon list: the Full Mana Forever flask in red.
+- Probe unchanged.
+
 **Full Health Forever 0.0.3** (test build, not for CurseForge)
 
 - Probe after the first test: the red square is now "danger" (health below 50 % and the heals
