@@ -145,5 +145,29 @@ Forever, **[probe]** = checked by our probe in game. Nothing here is "tested" un
   combat.
 - [probe] `GetSpecialization` does not exist; `UnitGroupRolesAssigned("player")` "NONE" solo.
 
-Still open: health out of combat, the danger square with a heal in flight, `isActive` while a
-cooldown runs, shared potion cooldown (mana / health), the meter after the fight, group, dungeon.
+### Probe 0.0.3, 7 Nov 2026 (same priest, solo, open world; log + 5 screenshots)
+
+- [probe] **Danger with heals in flight works.** Red square = frame alpha from the health curve
+  (below 50 %) x square alpha `SetAlphaFromBoolean(clamped50, 0.1, 1)` (calculator with
+  overflow 0.5, clamp mode MissingHealth):
+  - 295 / 732 (40 %), Heal in flight 349 (-> 88 %): red off, orange (clamped) on;
+  - 347 / 732 (47 %), no heal: red on, orange off;
+  - 197 / 732 (27 %), Lesser Heal in flight 99 (-> 40 %): red on, orange off.
+  So `clamped` = "a heal is in flight and health + heal pass overflow x max".
+- [probe] `UnitHealthPercent(p, true, S100)` equals `(p, false, S100)` also with a heal in flight
+  (40.30 / 40.30): `usePredicted` does NOT add incoming heals.
+- [probe] Health is secret **also out of combat** (`UnitHealth`, percent, missing), like mana.
+- [probe] Threat out of combat: `nil` for all three calls; in combat 3 (readable).
+- [probe] Damage meter **out of combat readable**: damage taken 455 in 47 s, 9.68 per second
+  (and 930 / 95 s / 9.79 for a second fight); in combat secret.
+- [probe] `isActive` of `C_Spell.GetSpellCooldown` is true during the **global cooldown** for every
+  spell (all eight watched spells flip together on each cast; `isOnGCD` is nil). Alone it cannot
+  tell "on its own cooldown". The duration object with `ignoreGCD = true` + a curve stayed "ready"
+  during the GCD (green square bright while `isActive` true). A spell's own cooldown in combat
+  (e.g. Psychic Scream) not seen yet.
+- [probe] Lesser Healing Potion cooldown after the fight: start + 120 s, readable.
+- [probe] Spells with a base cooldown >= 10 s in a level 21 priest's book include racials and
+  Forever spells with new IDs (1259823, 1277462, 1277455).
+
+Still open: own cooldown in combat via the duration curve, shared potion cooldown (no mana potion
+in the bags yet), group, dungeon, other classes.
