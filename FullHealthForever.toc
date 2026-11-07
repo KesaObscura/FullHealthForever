@@ -10,7 +10,8 @@
 ## Notes-koKR: 테스트 버전: WoW Forever가 애드온에 생명력에 대해 알려 주는 것을 보여 줍니다. 아직 생명력 바는 없습니다.
 ## Notes-zhCN: 测试版：显示 WoW Forever 允许插件读取的生命值信息。暂无生命条。
 ## Notes-zhTW: 測試版：顯示 WoW Forever 允許插件讀取的生命值資訊。尚無生命條。
-## Version: 0.0.1
+## Version: 0.0.4
+## IconTexture: Interface\AddOns\FullHealthForever\icon
 ## SavedVariables: FullHealthForeverProbeLog
 ## Author: KesaObscura
 ## X-License: MIT

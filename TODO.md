@@ -10,5 +10,7 @@
   - delete `tests/test_probe.lua` and its line in `tests/run.lua`;
   - change the TOC `## Notes` (all languages): no more "test build";
   - keep the findings: move every result into `docs/notes.md` first.
-- [ ] Owner runs the probe (`docs/probe-test.md`) and sends the SavedVariables file.
-- [ ] Final work plan from the probe results and the three player reviews.
+- [x] Owner ran probes 0.0.2 and 0.0.3 (results in `docs/notes.md`).
+- [x] Work plan: `docs/plan.md`; facts for both addons: `docs/forever-addon-api.md`.
+- [ ] Still to test in game: own cooldown in combat (duration curve), shared potion cooldown,
+  group with a healer, a dungeon.
