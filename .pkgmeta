@@ -1,0 +1,9 @@
+package-as: FullHealthForever
+
+ignore:
+  - tests
+  - tools
+  - docs
+  - .gitignore
+  - CLAUDE.md
+  - TODO.md
