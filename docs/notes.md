@@ -93,7 +93,7 @@ Forever, **[probe]** = checked by our probe in game. Nothing here is "tested" un
 - Class changes touch defensives: Shield Wall talent now cuts the cooldown; paladin Sacred Duty
   shortens Forbearance; Barkskin usable in forms.
 
-## Open questions (probe 0.0.2)
+## Open questions (asked by probe 0.0.2)
 
 1. `UnitHealth` secret out of combat? in combat? in a dungeon?
 2. `usePredicted` true vs false while a heal is cast on you.
@@ -109,4 +109,41 @@ Forever, **[probe]** = checked by our probe in game. Nothing here is "tested" un
 
 ## Results
 
-(none yet)
+### Probe 0.0.2, 7 Nov 2026 (priest 21, solo, open world, ruRU client)
+
+- [probe] Restrictions: only `Combat` turns on (2) in a fight in the open world; Encounter, Map and
+  the others stay 0. `C_Secrets`: out of combat auras / cooldowns / stats not secret, in combat
+  all three secret; `ShouldUnitHealthMaxBeSecret("player")` false.
+- [probe] In combat: `UnitHealth`, `UnitHealthMissing`, `UnitHealthPercent` (also with
+  `ScaleTo100`) secret; `UnitHealthMax` readable (732). Out of combat: not snapshotted yet.
+- [probe] `UnitHealthPercent(p, false, curve)` returns the colour (table); `(p, curve)` returns a
+  secret number: the order is `(unit, usePredicted, curve)` (FMF's first variant).
+- [probe] Incoming heals, absorbs, heal absorbs secret in combat; StatusBar takes all of them;
+  the bars and the "2 s ago" bar draw (screenshot).
+- [probe] Calculator: works; methods are not listed (userdata), but each one answers;
+  `SetIncomingHealOverflowPercent(0.5)` is kept (read back 0.50); `clamped` secret;
+  `SetAlphaFromBoolean(secret)` works; `EvaluateCurrentHealthPercent(curve)` works.
+- [probe] **`clamped` is false while no heal is in flight** (squares bright at 100 % health out of
+  combat). So it alone does not mean "health + heals below the line"; the danger test is
+  "health below the line (curve)" AND "not clamped", two nested alphas (probe 0.0.3).
+- [probe] `UNIT_COMBAT`: `amount` SECRET for damage AND heals, in combat AND out of combat
+  (bandage); `action` (WOUND, MISS, HEAL) and `school` readable. Hits can be counted, not summed.
+- [probe] `UNIT_HEALTH` fires about once per hit in combat; `UNIT_HEALTH_FREQUENT` cannot be
+  registered.
+- [probe] Threat readable in combat: `UnitThreatSituation("player")` = 3,
+  `UnitThreatSituation("player", "target")` = 3, `UnitDetailedThreatSituation` = true, 3, 100,
+  255, 39 (raw values too). Open world only so far.
+- [probe] Damage meter available; in combat the session's totals, DTPS and even
+  `durationSeconds` are secret; `GetSessionDurationSeconds` readable.
+- [probe] `C_Spell.GetSpellCooldown`: in combat `startTime` / `duration` secret, `isActive`
+  readable (false), `isOnGCD` nil. Not yet seen while a cooldown runs (0.0.3 tracks own spells
+  with a base cooldown of 10 s or more).
+- [probe] Lesser Healing Potion (858): cooldown readable in combat after drinking (120 s).
+  Heavy Linen Bandage (2581) -> spell 1159 "First Aid". Forever items in the bags with new IDs
+  (e.g. food 4592 -> spell 1249506, an elixir 247754 -> spell 1245244).
+- [probe] Aura secrecy (Recently Bandaged, Forbearance, Weakened Soul): 2 (depends), secret in
+  combat.
+- [probe] `GetSpecialization` does not exist; `UnitGroupRolesAssigned("player")` "NONE" solo.
+
+Still open: health out of combat, the danger square with a heal in flight, `isActive` while a
+cooldown runs, shared potion cooldown (mana / health), the meter after the fight, group, dungeon.

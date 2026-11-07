@@ -136,12 +136,13 @@ test("snapshot with every 0.0.2 API: restrictions, overflow idea, threat, meter,
   noSecretStored()
 end)
 
-test("watch with every 0.0.2 API: squares get the engine's alpha, meter and restrictions", function()
+test("watch with every API: danger square nested, cooldowns tracked, report after the fight", function()
   M.reset({ prediction = true, full = true })
   local ns = M.load()
-  slash("probe watch 20")
+  slash("probe watch 60")
   local W = ns.Probe.state
-  ok(chatHas('defensive on screen: 871 "Shield Wall"'), "defensive picked")
+  ok(chatHas('cooldowns watched: 871 "Shield Wall"'), "spells with a real cooldown")
+  ok(chatHas('cd 871 "Shield Wall" isActive nil %-> false'), "first state")
   M.S.combat = true
   M.fire("PLAYER_REGEN_DISABLED")
   ok(chatHas("PLAYER_REGEN_DISABLED"), "combat start printed")
@@ -149,17 +150,52 @@ test("watch with every 0.0.2 API: squares get the engine's alpha, meter and rest
   M.fire("ADDON_RESTRICTION_STATE_CHANGED", 0, 2)
   ok(chatHas("restriction 0 %-> 2"), "restriction event")
   M.fire("DAMAGE_METER_CURRENT_SESSION_UPDATED")
+  M.S.cdActive = true
   for _ = 1, 12 do M.tick(0.1) end
+  ok(chatHas('cd 871 "Shield Wall" isActive false %-> true %(combat=true%)'), "cooldown start seen")
   ok(M.isSecret(W.sqLow.alpha), "health curve alpha applied")
+  ok(M.isSecret(W.dangerHolder.alpha), "danger holder gets the health curve")
+  eq(type(W.sqDanger.alpha), "table", "danger square from a boolean")
+  ok(M.isSecret(W.sqDanger.alpha.flag), "secret flag handed to the game")
+  eq(W.sqDanger.alpha.ifTrue, 0.1, "clamped dims the danger square")
+  eq(W.sqClamp.alpha.ifTrue, 1, "clamped lights the orange square")
+  eq(W.sqDanger.alpha.flag.v, false, "no heal in flight: not clamped")
+  M.S.incoming = 600
+  M.tick(0.1)
+  eq(W.sqDanger.alpha.flag.v, true, "a big heal in flight: clamped")
   ok(M.isSecret(W.sqDef.alpha), "cooldown curve alpha applied")
-  eq(type(W.sq50.alpha), "table", "50 % square from a boolean")
-  ok(M.isSecret(W.sq50.alpha.flag), "secret flag handed to the game")
+  eq(W.lines[5]:GetText(), "last UNIT_COMBAT: - - -", "nothing yet shows as -, not n/a")
   eq(W.lines[6]:GetText(), "threat 0   damage taken/s 41.6", "threat and meter on screen")
-  eq(W.lines[7]:GetText(), "Shield Wall: isActive false (green = ready)", "defensive line")
+  eq(W.lines[7]:GetText(), "Shield Wall: isActive true (green = ready)", "defensive line")
   ok(chatHas("IN=1"), "non-unit events counted")
+  M.S.combat = false
+  M.fire("PLAYER_REGEN_ENABLED")
+  M.tick(0.5)
+  ok(not chatHas("after fight:"), "report waits a second")
+  for _ = 1, 8 do M.tick(0.1) end
+  ok(chatHas("after fight:"), "report after the fight")
+  ok(chatHas("UnitHealth%(p%) out of combat: SECRET"), "health out of combat")
+  ok(chatHas("  me: totalAmount=SECRET amountPerSecond=SECRET deathRecapID=0"), "meter after the fight")
+  ok(chatHas("  aura 11196 on me: duration=60"), "bandage debuff")
+  ok(chatHas("  item 929 x3: cd start=0 dur=0"), "potion cooldown")
   slash("probe stop")
-  ok(chatHas("squares: low=ok 50=ok 80=ok def=ok"), "squares reported")
+  ok(chatHas("squares: low=ok dangerHP=ok danger=ok clamp=ok def=ok"), "squares reported")
   noSecretStored()
+end)
+
+test("a snapshot during a watch keeps both logs apart", function()
+  M.reset({ prediction = true, full = true })
+  M.load()
+  slash("probe watch 30")
+  slash("probe")
+  M.fire("UNIT_COMBAT", "player", "WOUND", "", M.secret(5), 1)
+  local runs = FullHealthForeverProbeLog.runs
+  eq(#runs, 2)
+  local function has(r, pat) for _, l in ipairs(r.lines) do if l:find(pat) then return true end end end
+  ok(has(runs[1], "UNIT_COMBAT action"), "watch line in the watch run")
+  ok(not has(runs[2], "UNIT_COMBAT action"), "not in the snapshot run")
+  ok(has(runs[2], "API yes"), "snapshot lines in the snapshot run")
+  slash("probe stop")
 end)
 
 test("watch without SetAlphaFromBoolean reports the squares as failed", function()
@@ -170,5 +206,5 @@ test("watch without SetAlphaFromBoolean reports the squares as failed", function
   M.tick(0.2)
   slash("probe stop")
   M.noAlphaFromBoolean = nil
-  ok(chatHas("squares: low=ok 50=FAILED 80=FAILED def=ok"), "failures reported")
+  ok(chatHas("squares: low=ok dangerHP=ok danger=FAILED clamp=FAILED def=ok"), "failures reported")
 end)

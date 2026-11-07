@@ -124,9 +124,12 @@ function M.reset(opts)
       SetIncomingHealOverflowPercent = function(c, o) c.overflow = o end,
       SetIncomingHealClampMode = function(c, m) c.mode = m end,
       GetIncomingHealOverflowPercent = function(c) return c.overflow or 1.05 end,
-      -- clamped: health + incoming above overflow x max (the idea the probe tests)
+      -- clamped as seen in game (0.0.2): false while no heal comes; with a heal in flight
+      -- true when health + heal pass overflow x max (the probe's idea, still to be confirmed)
       GetIncomingHeals = function(c)
-        return M.secret(120), M.secret(0), M.secret(120), M.secret(S.hpPct + 120 / S.maxHP > (c.overflow or 1.05))
+        local inc = S.incoming or 0
+        return M.secret(inc), M.secret(0), M.secret(inc),
+          M.secret(inc > 0 and S.hpPct + inc / S.maxHP > (c.overflow or 1.05))
       end,
       GetCurrentHealthPercent = function() return M.secret(0.6) end,
       HasSecretValues = function() return true end,
@@ -166,14 +169,14 @@ function M.full(S)
   _G.C_Spell = {
     GetSpellName = function(id) return names[id] end,
     GetSpellCooldown = function()
-      return { isActive = false, isOnGCD = false, isEnabled = true, startTime = M.secret(0), duration = M.secret(0) }
+      return { isActive = S.cdActive or false, isOnGCD = false, isEnabled = true, startTime = M.secret(0), duration = M.secret(0) }
     end,
     GetSpellCooldownDuration = function()
       return { HasSecretValues = function() return true end,
         EvaluateRemainingDuration = function(_, curve) return { GetRGBA = function() return 1, 1, 1, M.secret(1) end } end }
     end,
   }
-  _G.GetSpellBaseCooldown = function() return 300000, 0 end
+  _G.GetSpellBaseCooldown = function(id) return id == 871 and 300000 or 0, 0 end
   _G.C_SpellBook = {
     GetNumSpellBookSkillLines = function() return 1 end,
     GetSpellBookSkillLineInfo = function() return { itemIndexOffset = 0, numSpellBookItems = 3 } end,

@@ -5,7 +5,7 @@
 local _, ns = ...
 local L = ns.L
 
-ns.VERSION = "0.0.2"
+ns.VERSION = "0.0.3"
 
 function ns.Print(fmt, ...)
   local ok, text = pcall(string.format, fmt, ...)

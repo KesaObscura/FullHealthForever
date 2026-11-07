@@ -7,7 +7,7 @@ Goal: a health bar with incoming heals and absorbs, and a hint when to use a hea
 healthstone, bandage or defensive cooldown - only when you are in danger, not whenever it
 would fit.
 
-**Status: test build 0.0.2.** It only contains a probe that finds out what the game lets an
+**Status: test build 0.0.3.** It only contains a probe that finds out what the game lets an
 addon read about health. No health bar yet.
 
 ## Commands

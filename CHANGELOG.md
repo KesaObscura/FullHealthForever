@@ -1,5 +1,17 @@
 # Changelog
 
+**Full Health Forever 0.0.3** (test build, not for CurseForge)
+
+- Probe after the first test: the red square is now "danger" (health below 50 % and the heals
+  in flight do not lift it above 50 %), the orange one shows the game's "heal reaches 50 %"
+  flag alone.
+- Own spells with a cooldown of 10 s or more are watched: every change of "on cooldown" is
+  written down, also in combat.
+- One second after each fight the probe writes what is readable again: health, damage meter,
+  Recently Bandaged, potion cooldowns (mana potions too: shared cooldown?).
+- Fixed: empty values made two lines of the test frame show "n/a"; a snapshot taken during a
+  watch took over the watch's lines.
+
 **Full Health Forever 0.0.2** (test build, not for CurseForge)
 
 - The probe asks more: addon restrictions and the game's own secrecy answers, the heal
