@@ -12,8 +12,9 @@ client 1.60.1, Interface 16001.
   about every case.
 - **[addon]**: what another public Forever addon reports. Not checked by us.
 
-All probe tests so far: one priest (level 21), solo, open world, ruRU client. Groups, dungeons,
-raids, battlegrounds and other classes are **not tested**.
+All probe tests so far: one priest (level 21), ruRU client: solo and in a group of 5 in the open
+world, and in a 5-player dungeon (also a boss fight, without a snapshot during it). Raids,
+battlegrounds and other classes are **not tested**.
 
 ---
 
@@ -36,8 +37,10 @@ raids, battlegrounds and other classes are **not tested**.
 5. **Restrictions** [doc, game]: `C_RestrictedActions.GetAddOnRestrictionState(type)`, types
    Combat 0, Encounter 1, ChallengeMode 2, PvPMatch 3, Map 4 (dungeons, raids), Chat 5; states
    0 off, 1 activating, 2 on; event `ADDON_RESTRICTION_STATE_CHANGED`. In the open world only
-   **Combat** turns on in a fight [game]. Dungeons / raids add Map and maybe Encounter rules
-   (`SecretOnRestrictedMaps`) [doc]: **test there separately**.
+   **Combat** turns on in a fight [game]. **In a dungeon `Map` is on all the time**; at a boss
+   `Encounter` and `Chat` turn on as well [game]. With Combat + Map on, everything in this
+   document behaved as in the open world [game]; during a boss (Encounter) only the events were
+   seen, no snapshot yet. Raids not tested.
 6. **The game tells you in advance** what will be secret [doc, game]: `C_Secrets.HasSecretRestrictions()`
    (true), `ShouldAurasBeSecret()`, `ShouldCooldownsBeSecret()`, `ShouldUnitStatsBeSecret()`
    (all three false out of combat, true in combat [game]), `ShouldUnitHealthMaxBeSecret(unit)`
@@ -107,12 +110,18 @@ raids, battlegrounds and other classes are **not tested**.
 - "Health 2 s ago": keep the secret `UnitHealth` values in a ring buffer and draw the old one as a
   second bar [game]. The gap shows the damage; nothing is calculated.
 
-## 5. Threat
+## 5. Threat, roles, other group members
 
 - `UnitThreatSituation("player")`, `UnitThreatSituation("player", "target")`,
   `UnitDetailedThreatSituation("player", "target")` [game]: **readable in combat** (3; true, 3,
-  100, 255, 39); `nil` out of combat. Open world only; documentation says "generally not secret"
-  when one unit is the player, secret for other pairs on restricted maps [doc].
+  100, 255, 39); `nil` out of combat. **Also in a dungeon fight**, for the player and for party
+  members (`UnitThreatSituation("party2")` 3) [game]. Documentation: secret for other unit pairs
+  on restricted maps [doc].
+- `UnitGroupRolesAssigned(unit)`: readable in a group (TANK, HEALER, DAMAGER), "NONE" solo [game].
+  `GetSpecialization` does not exist.
+- Party members [game]: `UnitHealth` and **`UnitHealthMax` secret** (even out of combat),
+  `UnitHealthPercent(unit, false, curve)` works, `UnitInRange` two secrets,
+  `UnitGetIncomingHeals` secret, class readable.
 
 ## 6. Spell cooldowns in combat
 
@@ -173,7 +182,7 @@ raids, battlegrounds and other classes are **not tested**.
 | Threat readable in combat | not needed by FMF | [game] |
 | Damage meter readable after a fight | not needed by FMF | [game] |
 | Health secret also out of combat | the rune / Life Tap health checks must stay curve-based | [game] |
-| Restrictions in dungeons | FMF tested in the open world; check a dungeon | open |
+| Restrictions in dungeons | `Map` on all the time; FMF's curve, max mana and the FHF calculator work there (both probes, 7 Nov) | boss fight (Encounter) not snapshotted |
 | `C_Secrets` predicates | clearer warnings / diagnostics ("cooldowns are secret now") | [doc, game] |
 
 ## 12. How these facts were found

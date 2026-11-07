@@ -169,5 +169,26 @@ Forever, **[probe]** = checked by our probe in game. Nothing here is "tested" un
 - [probe] Spells with a base cooldown >= 10 s in a level 21 priest's book include racials and
   Forever spells with new IDs (1259823, 1277462, 1277455).
 
-Still open: own cooldown in combat via the duration curve, shared potion cooldown (no mana potion
-in the bags yet), group, dungeon, other classes.
+### Probe 0.0.4, 7 Nov 2026 (same priest as healer, group of 5 in the open world and in a dungeon)
+
+- [probe] **In a dungeon `Map` is 2 all the time**, `Combat` 2 in fights; at a boss `Encounter`
+  and `Chat` turn on too (events: 1 -> activating, then active; off after the boss).
+  `C_Secrets` the same as in the open world.
+- [probe] In a dungeon fight (Combat 2 + Map 2): health, incoming heals, calculator, curve and
+  `SetAlphaFromBoolean` behave exactly as in the open world; the test frame showed no failure.
+- [probe] **Threat readable in a dungeon fight**: `UnitThreatSituation("player")` 0,
+  `UnitDetailedThreatSituation("player", "target")` false, 0, 38.18, 42, 127; party members too
+  (tank 3, a damage dealer 3, others 0). `nil` out of combat. A snapshot during a boss
+  (Encounter 2) was not taken.
+- [probe] **Roles readable in a group**: `UnitGroupRolesAssigned` HEALER (me), TANK, DAMAGER
+  (also out of the dungeon in a group); "NONE" solo.
+- [probe] Party members: `UnitHealth` and **`UnitHealthMax` secret** (also out of combat in the
+  open world), `UnitHealthPercent(unit, false, curve)` works, `UnitInRange` -> two secrets,
+  `UnitGetIncomingHeals` secret (nil once: probably out of range), class readable.
+- [probe] Damage meter after each dungeon fight readable (whole group's damage taken and own,
+  e.g. group 2557 / own 46 in 112 s); secret again if the next fight starts within the second.
+- Same day, Full Mana Forever's `/fmf probe` in the dungeon: `map=2`, `UnitPowerPercent` + curve
+  works (variant 1), max mana readable, in and out of combat.
+
+Still open: own cooldown in combat via the duration curve (Psychic Scream not cast yet), shared
+potion cooldown (no mana potion in the bags yet), a snapshot during a boss, other classes.
