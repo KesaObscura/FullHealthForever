@@ -19,9 +19,10 @@ Status 0.0.1: test build. `Probe.lua` (`/fhf probe`) is temporary: it is removed
   Technical probe output stays English (bug reports).
 - **Every control that can be clicked has a tooltip** (also while greyed out).
 - **Run the tests after every change:** `lua5.1 tests/run.lua` must end with `0 failed`. The
-  mock keeps health SECRET (compare / arithmetic / concat raise errors).
+  mock keeps health SECRET (compare / arithmetic / concat raise errors). GitHub runs the same
+  tests on every PR and every push to `main` (`.github/workflows/tests.yml`).
 - **After every change, hand the owner a test zip** built from the committed state:
-  `git archive --format=zip --prefix=FullHealthForever/ -o FullHealthForever-<version>-<hash>.zip HEAD -- . ':!tests' ':!tools' ':!docs' ':!.gitignore' ':!.pkgmeta' ':!CLAUDE.md' ':!TODO.md'`
+  `git archive --format=zip --prefix=FullHealthForever/ -o FullHealthForever-<version>-<hash>.zip HEAD -- . ':!tests' ':!tools' ':!docs' ':!.gitignore' ':!.github' ':!.pkgmeta' ':!CLAUDE.md' ':!TODO.md'`
 - Work on the session branch; `main` changes only through a PR the owner merges with **Squash
   and merge**. No PR unless the owner asks.
 - Commit author `Claude <noreply@anthropic.com>`; never rewrite the history of `main`.
