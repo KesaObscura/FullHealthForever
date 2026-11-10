@@ -198,15 +198,15 @@ add("tipLanguage", "Language of the addon's texts. Changes after /reload.", "Spr
 add("langAuto", "Game language", "Spielsprache", "Язык игры", "Idioma del juego", "Langue du jeu", "Idioma do jogo", "게임 언어", "游戏语言", "遊戲語言")
 add("optRole", "Role", "Rolle", "Роль", "Rol", "Rôle", "Função", "역할", "职责", "職責")
 add("tipRole",
- "Automatic: the role the group gives you; solo counts as damage. Tank: own defensives first, one line, the aggro icon shows a target that is not on you. Healer: healthstone first, potion last (it may share the cooldown with your mana potion).",
- "Automatisch: die Rolle, die dir die Gruppe gibt; solo zählt als Schaden. Tank: eigene Verteidigung zuerst, eine Linie, das Aggro-Symbol zeigt ein Ziel, das nicht dich angreift. Heiler: Gesundheitsstein zuerst, Trank zuletzt (er teilt vielleicht die Abklingzeit mit deinem Manatrank).",
- "Автоматически — роль, которую тебе даёт группа; соло считается уроном. Танк: сначала свои защитные, одна линия, значок агро показывает цель, которая бьёт не тебя. Хилер: сначала камень здоровья, зелье последним (у него может быть общий кулдаун с зельем маны).",
- "Automático: el rol que te da el grupo; en solitario cuenta como daño. Tanque: primero tus defensas, una sola línea, el icono de amenaza muestra un objetivo que no te ataca a ti. Sanador: primero la piedra de salud, la poción al final (puede compartir el tiempo de reutilización con tu poción de maná).",
- "Automatique : le rôle que te donne le groupe ; en solo, compte comme dégâts. Tank : tes défenses d'abord, une seule ligne, l'icône de menace montre une cible qui ne te frappe pas. Soigneur : pierre de soins d'abord, potion en dernier (elle partage peut-être le temps de recharge avec ta potion de mana).",
- "Automático: a função que o grupo te dá; solo conta como dano. Tanque: suas defesas primeiro, uma só linha, o ícone de aggro mostra um alvo que não está em você. Curador: pedra de vida primeiro, poção por último (ela pode dividir a recarga com a poção de mana).",
- "자동: 파티가 정해 준 역할, 솔로는 공격 담당으로 칩니다. 방어 담당: 자신의 방어 기술 먼저, 기준선 하나, 어그로 아이콘은 나를 치지 않는 대상을 보여 줍니다. 치유 담당: 생명석 먼저, 물약은 마지막 (마나 물약과 재사용 대기시간을 공유할 수 있음).",
- "自动：队伍给你的职责；单人算作伤害。坦克：先用自己的防御技能，只有一条线，仇恨图标表示目标没在打你。治疗：先用治疗石，药水最后（可能与法力药水共享冷却）。",
- "自動：隊伍給你的職責；單人算作傷害。坦克：先用自己的防禦技能，只有一條線，仇恨圖示表示目標沒在打你。治療：先用治療石，藥水最後（可能與法力藥水共用冷卻）。")
+ "Automatic: the role the group gives you; solo counts as damage. Tank: own defensives first, one line, the aggro icon shows a target that is not on you. Healer: healthstone first, potion last (it shares the cooldown with your mana potion).",
+ "Automatisch: die Rolle, die dir die Gruppe gibt; solo zählt als Schaden. Tank: eigene Verteidigung zuerst, eine Linie, das Aggro-Symbol zeigt ein Ziel, das nicht dich angreift. Heiler: Gesundheitsstein zuerst, Trank zuletzt (er teilt die Abklingzeit mit deinem Manatrank).",
+ "Автоматически — роль, которую тебе даёт группа; соло считается уроном. Танк: сначала свои защитные, одна линия, значок агро показывает цель, которая бьёт не тебя. Хилер: сначала камень здоровья, зелье последним (у него общий кулдаун с зельем маны).",
+ "Automático: el rol que te da el grupo; en solitario cuenta como daño. Tanque: primero tus defensas, una sola línea, el icono de amenaza muestra un objetivo que no te ataca a ti. Sanador: primero la piedra de salud, la poción al final (comparte el tiempo de reutilización con tu poción de maná).",
+ "Automatique : le rôle que te donne le groupe ; en solo, compte comme dégâts. Tank : tes défenses d'abord, une seule ligne, l'icône de menace montre une cible qui ne te frappe pas. Soigneur : pierre de soins d'abord, potion en dernier (elle partage le temps de recharge avec ta potion de mana).",
+ "Automático: a função que o grupo te dá; solo conta como dano. Tanque: suas defesas primeiro, uma só linha, o ícone de aggro mostra um alvo que não está em você. Curador: pedra de vida primeiro, poção por último (ela divide a recarga com a poção de mana).",
+ "자동: 파티가 정해 준 역할, 솔로는 공격 담당으로 칩니다. 방어 담당: 자신의 방어 기술 먼저, 기준선 하나, 어그로 아이콘은 나를 치지 않는 대상을 보여 줍니다. 치유 담당: 생명석 먼저, 물약은 마지막 (마나 물약과 재사용 대기시간을 공유함).",
+ "自动：队伍给你的职责；单人算作伤害。坦克：先用自己的防御技能，只有一条线，仇恨图标表示目标没在打你。治疗：先用治疗石，药水最后（与法力药水共享冷却）。",
+ "自動：隊伍給你的職責；單人算作傷害。坦克：先用自己的防禦技能，只有一條線，仇恨圖示表示目標沒在打你。治療：先用治療石，藥水最後（與法力藥水共用冷卻）。")
 add("roleAuto", "Automatic", "Automatisch", "Автоматически", "Automático", "Automatique", "Automático", "자동", "自动", "自動")
 add("roleTank", "Tank", "Tank", "Танк", "Tanque", "Tank", "Tanque", "방어 담당", "坦克", "坦克")
 add("roleHealer", "Healer", "Heiler", "Хилер", "Sanador", "Soigneur", "Curador", "치유 담당", "治疗", "治療")

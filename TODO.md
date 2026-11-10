@@ -10,7 +10,7 @@
 
 - [ ] Owner tests 0.1 in game (`docs/test-checklist.md`).
 - [ ] Still not seen in game: an own spell's cooldown in combat through the duration curve
-  (Psychic Scream test), shared potion cooldown (mana / health), a boss fight (Encounter).
+  (Psychic Scream test), a boss fight (Encounter). Shared potion cooldown: confirmed (10 Nov).
 - [ ] Screenshots for the gallery and the README (English addon texts).
 - [ ] Owner creates the CurseForge page (text: `CURSEFORGE.md`, summary: `docs/store.md`).
 

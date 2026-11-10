@@ -190,5 +190,7 @@ Forever, **[probe]** = checked by our probe in game. Nothing here is "tested" un
 - Same day, Full Mana Forever's `/fmf probe` in the dungeon: `map=2`, `UnitPowerPercent` + curve
   works (variant 1), max mana readable, in and out of combat.
 
-Still open: own cooldown in combat via the duration curve (Psychic Scream not cast yet), shared
-potion cooldown (no mana potion in the bags yet), a snapshot during a boss, other classes.
+Owner's test, 10 Nov 2026: **healing and mana potions share one cooldown** (2 minutes).
+
+Still open: own cooldown in combat via the duration curve (Psychic Scream not cast yet), a
+snapshot during a boss, other classes.

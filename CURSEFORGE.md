@@ -10,7 +10,7 @@
 - **The line follows the fight:** 35 % while a mob is on you, 25 % while none is, 30 % for tanks. All three adjustable.
 - **Health bar with incoming heals and shields,** drawn right after your health.
 - **Shadow: your health a moment ago.** A dark red bar under your health shows where it was 2 seconds ago: the bigger the gap, the faster you are losing health. Forever hides damage numbers from addons; this is the honest view of them.
-- **Your role decides the order.** Tanks: own defensives first (Shield Wall, Last Stand, Lay on Hands, Frenzied Regeneration ...); paladin tanks never get Divine Shield or Divine Protection, they drop the aggro. Healers: healthstone first, potion last (it may share the cooldown with your mana potion). The role comes from your group, or you pick it.
+- **Your role decides the order.** Tanks: own defensives first (Shield Wall, Last Stand, Lay on Hands, Frenzied Regeneration ...); paladin tanks never get Divine Shield or Divine Protection, they drop the aggro. Healers: healthstone first, potion last (it shares the cooldown with your mana potion). The role comes from your group, or you pick it.
 - **Aggro warning.** In a group an icon shows when a mob is on you; tanks see when their target is not on them.
 - **Bandages** light up only while no mob is on you (damage stops a bandage) and not within 60 s of the last one.
 - **Hold:** `/fhf hold` (best in a macro) keeps every icon dark until the end of the next fight, for when you want to save a cooldown.

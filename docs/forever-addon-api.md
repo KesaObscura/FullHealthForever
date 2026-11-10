@@ -148,9 +148,9 @@ battlegrounds and other classes are **not tested**.
 - Forever items and spells have new IDs (food 4592 -> spell 1249506, an elixir 247754 -> spell
   1245244; priest spells 1259823, 1277462, 1277455) [game]: read IDs from the game, do not
   assume Classic tables.
-- **Shared potion cooldown (mana / health): not tested yet.** In Classic all potions share it;
-  guides say all Forever healing potion ranks share 2 min. If mana and health potions share it, a
-  healing potion makes FMF's potion icon wait, and the reverse.
+- **Healing and mana potions share one cooldown** [game, owner's test 10 Nov 2026]: a healing
+  potion makes the mana potion wait 2 minutes, and the reverse. FMF's potion icon already shows it
+  (it reads the mana potion's own cooldown); FHF puts the potion last for healers.
 
 ## 8. Auras
 
@@ -178,7 +178,7 @@ battlegrounds and other classes are **not tested**.
 | --- | --- | --- |
 | Duration object + curve gives "ready" in combat, GCD ignored | Own spells (Evocation, Life Tap ...) ready in combat from the game instead of own timers | GCD part [game]; own cooldown in combat not seen yet |
 | `isActive` true during GCD | Do not use `isActive` alone for readiness | [game] |
-| Shared potion cooldown? | If shared: show it (a healing potion blocks the mana potion) | not tested |
+| Shared potion cooldown (mana / health) | Shared: FMF's icon already waits (it reads the mana potion's cooldown) | [game], owner 10 Nov |
 | Threat readable in combat | not needed by FMF | [game] |
 | Damage meter readable after a fight | not needed by FMF | [game] |
 | Health secret also out of combat | the rune / Life Tap health checks must stay curve-based | [game] |
