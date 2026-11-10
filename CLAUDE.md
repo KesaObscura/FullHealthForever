@@ -3,11 +3,14 @@
 WoW: Forever addon (client 1.60.1, interface 16001). Plain Lua 5.1, no libraries. Sister addon
 of Full Mana Forever (github.com/KesaObscura/FullManaForever): same owner, same rules; its
 `CLAUDE.md` and `docs/notes.md` hold the Forever facts both addons rely on.
-Files load in TOC order: Locale.lua -> Core.lua -> Probe.lua.
+Files load in TOC order: Locale.lua -> Data.lua -> Profiles.lua -> Engine.lua -> HUD.lua ->
+Core.lua -> Options.lua. Engine.lua: the danger test (health curve x heal prediction flag, two
+nested alphas), the line, readiness; HUD.lua: bar, icon layers, aggro icon; Core.lua: settings,
+events, tick, commands; Profiles.lua: from Full Mana Forever.
 
-Status 0.0.1: test build. `Probe.lua` (`/fhf probe`) is temporary: it is removed before 0.1
-(checklist in `TODO.md`). The real addon is planned only after the probe results
-(`docs/notes.md`, "Results") and three player reviews.
+Status 0.1.0 (10 Nov 2026): first real version (MVP of `docs/plan.md`). The probe of 0.0.x is
+removed; its results are in `docs/notes.md`. `Locale.lua` is generated: edit the texts in
+`tools/locale_gen.py`, then `python3 tools/locale_gen.py Locale.lua`.
 
 ## Rules
 
@@ -16,13 +19,13 @@ Status 0.0.1: test build. `Probe.lua` (`/fhf probe`) is temporary: it is removed
   describe the change only.
 - **Every user-visible text in all 9 locale tables** of `Locale.lua` (enUS, deDE, ruRU, esES,
   frFR, ptBR, koKR, zhCN, zhTW; esMX falls back to esES); informal "you" (ru ты, fr tu).
-  Technical probe output stays English (bug reports).
+  Technical output (`/fhf status`, `/fhf debug`) stays English (bug reports).
 - **Every control that can be clicked has a tooltip** (also while greyed out).
 - **Run the tests after every change:** `lua5.1 tests/run.lua` must end with `0 failed`. The
   mock keeps health SECRET (compare / arithmetic / concat raise errors). GitHub runs the same
   tests on every PR and every push to `main` (`.github/workflows/tests.yml`).
 - **After every change, hand the owner a test zip** built from the committed state:
-  `git archive --format=zip --prefix=FullHealthForever/ -o FullHealthForever-<version>-<hash>.zip HEAD -- . ':!tests' ':!tools' ':!docs' ':!.gitignore' ':!.github' ':!.pkgmeta' ':!CLAUDE.md' ':!TODO.md'`
+  `git archive --format=zip --prefix=FullHealthForever/ -o FullHealthForever-<version>-<hash>.zip HEAD -- . ':!tests' ':!tools' ':!docs' ':!.gitignore' ':!.github' ':!.pkgmeta' ':!CLAUDE.md' ':!TODO.md' ':!CURSEFORGE.md'`
 - Work on the session branch; `main` changes only through a PR the owner merges with **Squash
   and merge**. No PR unless the owner asks.
 - Commit author `Claude <noreply@anthropic.com>`; never rewrite the history of `main`.

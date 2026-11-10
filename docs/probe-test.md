@@ -1,3 +1,5 @@
+> Historical: the probe (`/fhf probe`) was removed in 0.1. Results: `docs/notes.md`.
+
 # Зонд 0.0.3: что проверить в игре (10 минут)
 
 0.0.2 уже ответил на многое (см. `docs/notes.md`, "Results"). Здесь только то, что осталось.

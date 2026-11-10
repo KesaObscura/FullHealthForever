@@ -74,10 +74,11 @@
 Связь с FMF: **через игру, не через Lua**: оба читают кулдауны предметов сами; «опасно» передать
 нельзя (это прозрачность). Общий порог Life Tap — только как настройка в FMF.
 
-Файлы (порядок TOC): `Locale.lua` → `Data.lua` (ID, проверенные игрой) → `Profiles.lua` (из FMF) →
-`Danger.lua` (кривые, калькуляторы, вложенные прозрачности) → `Items.lua` (камни, зелья, бинты,
-свои КД) → `Bar.lua` (полоса, хил, щиты, тень) → `Threat.lua` → `Core.lua` → `Options.lua` →
-`Diag.lua` (`/fhf log`, без секретов). `Probe.lua` удаляется (TODO.md).
+Файлы (порядок TOC, как сделано в 0.1): `Locale.lua` (генерируется `tools/locale_gen.py`) →
+`Data.lua` (ID, проверяемые игрой при запуске) → `Profiles.lua` (из FMF) → `Engine.lua` (кривые,
+калькулятор, вложенные прозрачности, линия, готовность) → `HUD.lua` (полоса, хил, щиты, тень,
+слои иконок, значок агро) → `Core.lua` (настройки, события, такт, команды) → `Options.lua`.
+`Probe.lua` удалён в 0.1.
 
 Ключи настроек (профиль): `role` (auto / tank / healer / dps), `thrAggro` (35), `thrNoAggro`
 (25), `thrTank` (30), `groups` (stone, potion, bandage, defensive), `shadow` (true), `shadowSec`

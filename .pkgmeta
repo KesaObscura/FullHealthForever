@@ -7,4 +7,5 @@ ignore:
   - .gitignore
   - .github
   - CLAUDE.md
+  - CURSEFORGE.md
   - TODO.md

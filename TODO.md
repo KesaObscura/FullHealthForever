@@ -1,16 +1,20 @@
 # TODO
 
-## Before 0.1 (first real release)
+## Done for 0.1
 
-- [ ] **Remove the probe from the code** (it is a test tool, not a feature):
-  - delete `Probe.lua` and its line in `FullHealthForever.toc`;
-  - drop `FullHealthForeverProbeLog` from `## SavedVariables`;
-  - drop the locale keys `helpProbe`, `helpWatch`, `helpStop`, `helpSend`, `watchStart`,
-    `watchDone`, `snapDone` in all 9 languages;
-  - delete `tests/test_probe.lua` and its line in `tests/run.lua`;
-  - change the TOC `## Notes` (all languages): no more "test build";
-  - keep the findings: move every result into `docs/notes.md` first.
-- [x] Owner ran probes 0.0.2 and 0.0.3 (results in `docs/notes.md`).
-- [x] Work plan: `docs/plan.md`; facts for both addons: `docs/forever-addon-api.md`.
-- [ ] Still to test in game: own cooldown in combat (duration curve), shared potion cooldown,
-  group with a healer, a dungeon.
+- [x] Probe removed from the code (results in `docs/notes.md`).
+- [x] MVP of `docs/plan.md`: bar, incoming heals, shields, shadow, danger icons, line by aggro
+  and role, aggro icon, hold, settings, profiles, 9 languages.
+
+## Before the CurseForge upload of 0.1
+
+- [ ] Owner tests 0.1 in game (`docs/test-checklist.md`).
+- [ ] Still not seen in game: an own spell's cooldown in combat through the duration curve
+  (Psychic Scream test), shared potion cooldown (mana / health), a boss fight (Encounter).
+- [ ] Screenshots for the gallery and the README (English addon texts).
+- [ ] Owner creates the CurseForge page (text: `CURSEFORGE.md`, summary: `docs/store.md`).
+
+## Later (plan 0.2+)
+
+- Own HoTs on the bar, "no damage for N s", fight summary from the damage meter, "eat" after a
+  fight; tank "one hit" line; focus-tank window for healers.

@@ -1,22 +1,26 @@
 ## Interface: 16001
 ## Title: Full Health Forever
-## Notes: Test build: shows what WoW Forever lets an addon know about your health. No health bar yet.
-## Notes-deDE: Testversion: zeigt, was WoW Forever einem Addon über deine Gesundheit verrät. Noch keine Gesundheitsleiste.
-## Notes-ruRU: Тестовая сборка: показывает, что WoW Forever разрешает аддону знать о твоём здоровье. Полосы здоровья пока нет.
-## Notes-esES: Versión de prueba: muestra lo que WoW Forever deja saber a un addon sobre tu salud. Aún sin barra de salud.
-## Notes-esMX: Versión de prueba: muestra lo que WoW Forever deja saber a un addon sobre tu salud. Aún sin barra de salud.
-## Notes-frFR: Version de test : montre ce que WoW Forever laisse savoir à un addon sur ta santé. Pas encore de barre de santé.
-## Notes-ptBR: Versão de teste: mostra o que o WoW Forever deixa um addon saber sobre sua vida. Ainda sem barra de vida.
-## Notes-koKR: 테스트 버전: WoW Forever가 애드온에 생명력에 대해 알려 주는 것을 보여 줍니다. 아직 생명력 바는 없습니다.
-## Notes-zhCN: 测试版：显示 WoW Forever 允许插件读取的生命值信息。暂无生命条。
-## Notes-zhTW: 測試版：顯示 WoW Forever 允許插件讀取的生命值資訊。尚無生命條。
-## Version: 0.0.4
+## Notes: Health bar with incoming heals and shields. Your healthstone, healing potion, bandage or defensive spell lights up only in real danger: low health that the heals in flight will not fix.
+## Notes-deDE: Gesundheitsleiste mit eingehenden Heilungen und Schilden. Gesundheitsstein, Heiltrank, Verband oder Verteidigungszauber leuchten nur bei echter Gefahr: wenig Gesundheit, die laufende Heilungen nicht retten.
+## Notes-ruRU: Полоса здоровья с летящим хилом и щитами. Камень здоровья, зелье, бинт или защитное умение загораются только при настоящей опасности: мало здоровья, и летящий хил не спасёт.
+## Notes-esES: Barra de salud con curaciones entrantes y escudos. Tu piedra de salud, poción, venda o hechizo defensivo se ilumina solo con peligro real: poca salud que las curaciones en curso no arreglarán.
+## Notes-esMX: Barra de salud con curaciones entrantes y escudos. Tu piedra de salud, poción, venda o hechizo defensivo se ilumina solo con peligro real: poca salud que las curaciones en curso no arreglarán.
+## Notes-frFR: Barre de santé avec soins entrants et boucliers. Ta pierre de soins, potion, bandage ou sort défensif s'allume seulement en vrai danger : peu de santé que les soins en cours ne sauveront pas.
+## Notes-ptBR: Barra de vida com curas a caminho e escudos. Sua pedra de vida, poção, atadura ou feitiço defensivo acende só em perigo real: pouca vida que as curas em andamento não vão resolver.
+## Notes-koKR: 들어오는 치유와 보호막이 보이는 생명력 바. 생명석, 치유 물약, 붕대, 방어 주문은 진짜 위험할 때만 켜집니다: 생명력이 낮고 시전 중인 치유로도 부족할 때.
+## Notes-zhCN: 显示即将到来的治疗和护盾的生命条。治疗石、治疗药水、绷带或防御技能只在真正危险时亮起：血量低且正在施放的治疗救不回来。
+## Notes-zhTW: 顯示即將到來的治療和護盾的生命條。治療石、治療藥水、繃帶或防禦技能只在真正危險時亮起：血量低且正在施放的治療救不回來。
+## Version: 0.1.0
 ## IconTexture: Interface\AddOns\FullHealthForever\icon
-## SavedVariables: FullHealthForeverProbeLog
+## SavedVariables: FullHealthForeverDB
 ## Author: KesaObscura
 ## X-License: MIT
 ## X-Website: https://github.com/KesaObscura/FullHealthForever
 
 Locale.lua
+Data.lua
+Profiles.lua
+Engine.lua
+HUD.lua
 Core.lua
-Probe.lua
+Options.lua
