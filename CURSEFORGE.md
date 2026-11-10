@@ -1,5 +1,3 @@
-# Full Health Forever
-
 **Don't die in World of Warcraft: Forever (WoW Forever, Classic+).** Your healthstone, healing potion, bandage or defensive spell lights up **only in real danger**: when your health is low **and the heals in flight will not fix it**. From the maker of [Full Mana Forever](https://www.curseforge.com/wow/addons/full-mana-forever).
 
 ![Full Mana Forever and Full Health Forever](https://raw.githubusercontent.com/KesaObscura/FullHealthForever/main/docs/images/full-forever-family.png)
@@ -31,6 +29,18 @@ In WoW Forever your current health is a secret value, in and out of combat: addo
 
 ## Tested so far
 
-Tested in game with a priest (level 21): solo, in a group and in a dungeon (test builds 0.0.2 to 0.0.4). Other classes, raids and battlegrounds: tell us how it works for you.
+- Priest, level 21: solo, in a group and in a 5-player dungeon (test builds 0.0.2 to 0.0.4).
+- Not tested yet: other classes, raids, battlegrounds. Tell us how it works for you.
 
 Found a bug? [GitHub issues](https://github.com/KesaObscura/FullHealthForever/issues) or a comment here.
+
+---
+
+- Deutsch: Gesundheitsleiste mit eingehenden Heilungen und Schilden. Gesundheitsstein, Heiltrank, Verband oder Verteidigungszauber leuchten nur bei echter Gefahr.
+- Русский: Полоса здоровья с летящим хилом и щитами. Камень здоровья, лечебное зелье, бинт или защитное умение загораются только при настоящей опасности.
+- Español: Barra de salud con curaciones entrantes y escudos. Tu piedra de salud, poción de sanación, venda o hechizo defensivo se ilumina solo con peligro real.
+- Français : barre de santé avec soins entrants et boucliers. Ta pierre de soins, potion de soins, bandage ou sort défensif s'allume seulement en vrai danger.
+- Português: barra de vida com curas a caminho e escudos. Sua pedra de vida, poção de cura, atadura ou feitiço defensivo acende só em perigo real.
+- 한국어: 들어오는 치유와 보호막이 보이는 생명력 바. 생명석, 치유 물약, 붕대, 방어 주문은 진짜 위험할 때만 켜집니다.
+- 简体中文：显示即将到来的治疗和护盾的生命条。治疗石、治疗药水、绷带或防御技能只在真正危险时亮起。
+- 繁體中文：顯示即將到來的治療和護盾的生命條。治療石、治療藥水、繃帶或防禦技能只在真正危險時亮起。

@@ -18,6 +18,37 @@ possible for both addons.
 - 9 languages, not 10. Not only for healers or tanks: every class.
 - CurseForge summary and gallery descriptions: at most 256 characters each.
 
+## Family rules (from Full Mana Forever's SEO plan, 10 Nov 2026; example in `docs/seo-fmf-example.md`)
+
+1. **Separate words, so the addons do not take searches from each other:** mana / 5SR / regen
+   only FMF; **health / healing potion / healthstone / bandage / defensive only FHF**; "time to
+   die" / TTD / kill time only a third addon (Time to Die Forever, if the name is free).
+   FHF mentions mana only where a fact needs it (healers: shared potion cooldown).
+2. **Names in one row:** Full Mana Forever, Full Health Forever, Time to Die Forever.
+3. **Every summary starts with its own main word and "WoW Forever"**, at most 256 characters.
+4. **Main categories:** HUDs for FMF and FHF, Combat for Time to Die.
+5. **One logo series:** the same flask style; blue (mana), red (health), a third item in its own
+   colour.
+6. **Links to each other only once a page exists** ("More Forever addons" block at the end of the
+   descriptions, README, About); not through CurseForge dependencies.
+7. **Honest promises:** only what works in game; "not tested" written as such.
+8. **Same look:** README, releases ("Name X.Y.Z – WoW Forever … addon"), social preview, a common
+   gallery footer.
+
+Lessons from the FMF plan for our own pages:
+- CurseForge **Source** and **Issues** fields -> the GitHub repository and its issues (strongest
+  link without posts).
+- `CURSEFORGE.md` without a `#` title on top (CurseForge shows the name itself; a title pushes the
+  first image down).
+- At the end of the description: one line per language (the TOC notes), so searches in other
+  languages find it.
+- "Tested so far" as a short, current list; FAQ entries for the questions players search.
+- README: a **Download** line right under the badges (CurseForge + latest release); keywords in
+  the headings; install line with a link to the CurseForge app in release texts.
+- A new feature goes into the summary, About and the first paragraph, or search does not see it.
+- GitHub Topics up to 20; never topics that read as Classic Era support (`wow-classic`).
+- Not taken there and not here: renaming for keywords, forum / Reddit posts.
+
 ## GitHub (the owner sets these by hand: Settings / About)
 
 - **About** (description):
@@ -41,11 +72,14 @@ possible for both addons.
 ## CurseForge (at 0.1, not before)
 
 - **Title**: Full Health Forever.
-- **Summary** draft (≤ 256): "Don't die in WoW Forever: your healthstone, health potion, bandage
-  or defensive lights up only in real danger, when low health won't be fixed by the heals in
-  flight. Health bar with incoming heals, shields and an aggro warning. For every class."
-- **Categories**: main Combat (or HUDs, as FMF); additional Unit Frames? no (it is not a unit
-  frame); Tank, Healer, Damage Dealer if CurseForge offers them; Buffs & Debuffs no.
+- **Summary** draft (≤ 256; starts with the main word and WoW Forever, family rule 3): "Health
+  addon for WoW Forever: your healthstone, healing potion, bandage or defensive lights up only in
+  real danger, when the heals in flight won't fix your low health. Health bar with incoming heals,
+  shields and an aggro warning." (to check the length before use)
+- **Categories**: main **HUDs** (family rule 4); additional Combat, Tank, Healer, Damage Dealer if
+  CurseForge offers them; not Unit Frames (it is not a unit frame).
+- **Source** and **Issues** fields: `https://github.com/KesaObscura/FullHealthForever` and its
+  `/issues`.
 - **Game version** 1.60.1, release type Release.
 - **Avatar**: the red flask (256x256 `docs/images/icon.png`).
 - **Description** (`CURSEFORGE.md` at 0.1): three blocks like FMF (what it does, how it works with

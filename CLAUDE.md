@@ -53,6 +53,11 @@ healer (own heal first, potion last).
 - SEO and store pages as strong as FMF's, for both addons: `docs/store.md` (keywords, GitHub
   About / topics / settings, CurseForge summary draft, ideas for FMF). FMF itself is changed only
   in its own sessions.
+- **Family SEO rules (owner, 10 Nov; `docs/store.md`, example `docs/seo-fmf-example.md`):** each
+  addon keeps its own words (FHF: health, healing potion, healthstone, bandage, defensive; never
+  mana / 5SR / regen as keywords), every summary starts with its main word and "WoW Forever",
+  main category HUDs, one logo series, links between the addons only once a page exists, only
+  promises that work in game. Read `docs/store.md` before any store, README or release text.
 
 ## Keep in sync on every user-visible change
 
