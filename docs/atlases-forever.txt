@@ -1,0 +1,111 @@
+# Atlases in the Forever client (YES = exists, no = missing), checked in game 11 Nov 2026
+YES UI-Frame-Metal-CornerTopLeft 95x95 8069116
+YES UI-Frame-Metal-CornerTopRight 95x95 8069116
+YES UI-Frame-Metal-CornerBottomLeft 95x100 8069116
+YES UI-Frame-Metal-CornerBottomRight 95x100 8069116
+YES _UI-Frame-Metal-EdgeTop 128x95 8069118
+YES _UI-Frame-Metal-EdgeBottom 128x100 8069118
+YES !UI-Frame-Metal-EdgeLeft 95x128 8069114
+YES !UI-Frame-Metal-EdgeRight 95x128 8069114
+YES UI-Frame-DiamondMetal-Header-CornerLeft 32x39 8069124
+YES UI-Frame-DiamondMetal-Header-CornerRight 32x39 8069124
+YES _UI-Frame-DiamondMetal-Header-Tile 32x39 8069124
+no  UI-Frame-Neutral-CornerTopLeft
+no  UI-Frame-Neutral-CornerTopRight
+no  _UI-Frame-Neutral-EdgeTop
+no  !UI-Frame-Neutral-EdgeLeft
+no  UI-Frame-Oribos-CornerTopLeft
+no  UI-Frame-Dragonflight-CornerTopLeft
+no  UI-Frame-DragonflightTitle-CornerTopLeft
+YES UI-Frame-PortraitMetal-CornerTopLeft 95x95 8069116
+YES UI-Frame-GenericMetal-Corner 166x166 2966265
+no  UI-Frame-GenericMetal-ExitButton
+YES UI-Frame-InnerTopLeft 6x6 1723831
+YES UI-Frame-InnerTopRight 6x6 1723831
+YES _UI-Frame-InnerTopTile 256x3 1723833
+YES !UI-Frame-InnerLeftTile 3x256 1723832
+YES Options_InnerFrame 886x618 8086468
+YES Options_HorizontalDivider 630x1 8086468
+YES Options_CategoryHeader_1 199x144 8086468
+YES Options_CategoryHeader_2 199x144 8086468
+YES Options_ListExpand_Right 28x26 4571485
+YES Options_ListExpand_Right_Expanded 28x26 4571485
+no  Options_Tab_Active
+no  Options_Tab_Inactive
+YES checkbox-minimal 30x29 8086474
+YES checkmark-minimal 30x29 4614134
+no  checkbox-minimal-disabled
+YES checkmark-minimal-disabled 30x29 4614134
+YES common-dropdown-a-button 27x27 8069112
+YES common-dropdown-a-button-hover 27x27 8069112
+YES common-dropdown-a-button-open 27x27 8069112
+YES common-dropdown-a-button-disabled 27x27 8069112
+YES common-dropdown-icon-next 17x17 5390329
+YES common-dropdown-icon-back 17x17 5390329
+YES common-dropdown-bg 68x68 8069112
+YES common-dropdown-ticksquare 12x12 5390329
+YES common-dropdown-tickradial 18x18 5390329
+YES common-dropdown-c-button 39x39 8069112
+YES common-dropdown-b-button 97x26 8069112
+YES Minimal_SliderBar_Left 11x17 8086434
+no  Minimal_SliderBar_Middle
+YES Minimal_SliderBar_Right 11x17 8086434
+YES Minimal_SliderBar_Button 20x19 8086434
+YES Minimal_SliderBar_Button_Left 11x19 8086434
+YES Minimal_SliderBar_Button_Right 9x18 8086434
+YES minimal-scrollbar-arrow-top 17x11 8069102
+YES minimal-scrollbar-thumb-top 8x8 8069102
+YES 128-RedButton-Up 470x128 6794983
+YES 128-RedButton-Highlight 441x128 1536801
+YES 128-RedButton-Pressed 470x128 6794983
+YES 128-RedButton-Disable 470x128 6794983
+no  128-GoldRedButton-Up
+YES common-button-square-gray-up 42x42 8117690
+YES common-button-square-gray-down 42x42 8117690
+YES common-button-tertiary-normal-small 65x25 8069108
+no  common-search-border
+no  common-input-border
+YES common-search-magnifyingglass 24x24 6725697
+YES RedButton-Exit 32x32 8107307
+no  RedButton-exit-hover
+YES RedButton-Exit-Pressed 32x32 8107307
+YES uitools-icon-close 20x20 5400310
+YES uitools-icon-minimize 20x20 5400310
+YES UI-HUD-ActionBar-IconFrame 46x45 7948328
+YES UI-HUD-ActionBar-IconFrame-Mouseover 46x45 4613342
+YES UI-HUD-ActionBar-IconFrame-Down 46x45 4613342
+YES UI-HUD-ActionBar-IconFrame-Slot 64x62 7948328
+YES UI-HUD-ActionBar-IconFrame-AddRow 51x51 7948328
+YES UI-HUD-ActionBar-Proc-Loop-Flipbook 333x400 5199404
+YES UI-HUD-ActionBar-Proc-Start-Flipbook 842x1010 5199404
+YES UI-HUD-ActionBar-IconFrame-Flash 46x45 4613342
+YES UI-HUD-ActionBar-IconFrame-Border 46x45 4613342
+YES UI-HUD-ActionBar-Interrupt 43x43 5199404
+YES UI-HUD-UnitFrame-Player-PortraitOn 198x71 8036204
+YES UI-HUD-UnitFrame-Player-PortraitOn-Bar-Mana 124x10 8036204
+YES UI-HUD-UnitFrame-Player-PortraitOn-Bar-Health 124x20 8036204
+YES UI-HUD-UnitFrame-Player-PortraitOn-Bar-Mana-Status 124x10 8036204
+YES UI-HUD-UnitFrame-Target-PortraitOn-Bar-Mana 134x10 8036204
+YES UI-HUD-UnitFrame-Player-PortraitOff-Bar-Mana 126x12 4631591
+YES UI-HUD-UnitFrame-Party-PortraitOn-Bar-Mana 74x7 8116745
+no  UI-HUD-UnitFrame-Player-GroupIndicator
+YES UI-CastingBar-Background 211x13 8311977
+no  UI-CastingBar-Standard
+YES UI-CastingBar-Frame 213x15 8311977
+YES UI-CastingBar-Full-Glow-Standard 213x15 8311977
+YES ui-castingbar-filling-standard 209x11 8311977
+YES ui-castingbar-tier1-empower 209x11 8311977
+no  UI-CastingBar-Spark
+YES UI-HUD-Minimap-Button 20x18 4618651
+YES UI-HUD-MicroMenu-GameMenu-Up 32x41 8200846
+YES Objective-Header 297x86 959719
+YES UI-QuestTrackerButton-Secondary-Collapse 16x16 8268356
+YES GarrMission_TopBorderCorner-Highlight 26x33 952656
+YES UI-Achievement-Alert-Background 310x101 4035524
+no  GenericMetal2-CornerTopLeft
+YES dragonflight-landingbutton-up 100x100 4746629
+YES talents-node-circle-yellow 40x40 4556093
+YES talents-search-match 63x63 4556093
+YES communities-create-button-wow-up 132x70 1981967
+no  UI-EJ-Cutout-Corner
+no  Glues-Login-Logo

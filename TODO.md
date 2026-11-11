@@ -16,5 +16,10 @@
 
 ## Later (plan 0.2+)
 
+- Series look (`docs/series-style.md`, atlases in `docs/atlases-forever.txt`): a shared `Skin.lua`
+  copied into each addon; FHF's accent `#E0343C` only as the 1 px line under the title, the icon
+  and the HUD. Today `Options.lua` tints buttons and section lines red: that goes when the skin
+  comes.
+
 - Own HoTs on the bar, "no damage for N s", fight summary from the damage meter, "eat" after a
   fight; tank "one hit" line; focus-tank window for healers.
