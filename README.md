@@ -32,14 +32,6 @@ casting is not in danger; a mage at 20 % with nobody healing is. Fewer hints, bu
 - Shown only in combat by default; solo / party / raid switches; ready icons can show dimmed;
   shared or own profile per character; 9 languages.
 
-## How it works with Forever's addon rules
-
-In Forever your current health is a *secret value*, in and out of combat: addons cannot read or
-compare it. Full Health Forever never tries to. It hands the game a step curve
-(`UnitHealthPercent`) and the game's own heal prediction calculator, and the game returns an
-alpha for the icons: "health below the line **and** the heals being cast will not lift it
-above". Nothing is calculated in Lua. Details for addon authors: `docs/forever-addon-api.md`.
-
 ## Commands
 
 | Command | What it does |

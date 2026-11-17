@@ -1,15 +1,5 @@
--- Full Health Forever - the danger test, the line, readiness.
---
--- Current health is secret in Forever, also out of combat (probe 0.0.3): the addon never reads
--- it. "Danger" is decided by the game and never known to Lua:
---   frame A alpha = UnitHealthPercent(player, false, step curve): 1 below the line, 0 above;
---   frame B (child of A) alpha = SetAlphaFromBoolean(clamped, 0, 1) of a heal prediction
---     calculator with overflow = the line: clamped is true only while a heal is in flight that
---     lifts health above the line (probe 0.0.3, three cases in game);
---   nested alphas multiply: an icon inside B is visible only when health is below the line AND
---   the heals in flight will not lift it above.
--- What Lua does know (readable in combat, probes 0.0.2-0.0.4): threat ("a mob is on you"),
--- the group role, item cooldowns and counts, own casts.
+-- Full Health Forever - when an icon may light up (health line, heals in flight), the line for
+-- the role and the aggro, whether items and spells are ready. Health values stay with the game.
 
 local _, ns = ...
 local E = {}
@@ -77,8 +67,7 @@ function E.MobOnMe()
   return s ~= nil and s >= 2
 end
 
--- "tank", "healer" or "dps"; auto = the group role from the game (readable in a group,
--- probe 0.0.4), solo counts as dps
+-- "tank", "healer" or "dps"; auto = the group role, solo counts as dps
 function E.Role(setting)
   if setting == "tank" or setting == "healer" or setting == "dps" then return setting end
   local r = Call(UnitGroupRolesAssigned, "player")
@@ -142,7 +131,7 @@ function E.Strongest(list, usable)
   end
 end
 
--- ready now? Wand shots put a short cooldown on all items: ignored (FMF)
+-- ready now? Short cooldowns from wand shots are ignored
 function E.ItemReady(id, now)
   if Count(id) <= 0 then return false end
   local start, dur, enable = ItemCooldown(id)
@@ -184,7 +173,7 @@ function E.SpellName(id)
   return n
 end
 
--- own cooldowns from own casts (the game hides spell cooldowns in combat): name -> ready time
+-- own cooldowns from own casts: name -> ready time
 local readyAt = {}
 E.readyAt = readyAt
 
@@ -197,7 +186,7 @@ function E.OnOwnCast(spellID, now)
   end
 end
 
--- out of combat the game's cooldown is readable: the own timer follows it (talents, resets)
+-- out of combat the own timer follows the game's cooldown (talents, resets)
 function E.SyncSpell(name, id, now)
   local cd = Call(C_Spell and C_Spell.GetSpellCooldown, id)
   if type(cd) ~= "table" or IsSecret(cd) then return end
@@ -215,9 +204,7 @@ function E.SpellReady(name, id, now)
   return true
 end
 
--- game side: alpha from the spell's own cooldown (duration object, GCD ignored); applies 1 when
--- the game has no answer. In game the GCD part is checked (probe 0.0.3), a spell's own cooldown
--- in combat is NOT checked yet.
+-- the game's answer for the spell's own cooldown as an alpha (1 when it gives none)
 function E.ApplySpellCooldown(frame, id)
   local ok, dur = pcall(C_Spell and C_Spell.GetSpellCooldownDuration or error, id, true)
   if ok and type(dur) ~= "nil" then

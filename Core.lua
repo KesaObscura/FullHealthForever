@@ -8,7 +8,7 @@ local H = ns.HUD
 ns.VERSION = "0.1.0"
 ns.BUG_URL = "https://github.com/KesaObscura/FullHealthForever/issues"
 
--- profile defaults (owner, 7 Nov: lines 35 / 25 / 30 %, shadow on, bar apart from FMF)
+-- profile defaults
 ns.DEFAULTS = {
   role = "auto",
   thrAggro = 0.35, thrNoAggro = 0.25, thrTank = 0.30,
@@ -199,7 +199,7 @@ function ns.Tick(now)
   H.Update(db, st)
 end
 
--- fail closed: an error anywhere here darkens the icons (FMF 0.9.2)
+-- an error anywhere here darkens the icons
 local function SafeTick(now)
   local ok, err = pcall(ns.Tick, now)
   if not ok then

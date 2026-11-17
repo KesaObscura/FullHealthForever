@@ -1,10 +1,7 @@
-local _, ns = ...
+-- Full Health Forever - the items and spells the addon knows. An ID the game does not know is
+-- simply not shown.
 
--- Items and spells the addon knows. IDs are Classic IDs; every one is checked by the game at
--- runtime (an item the game does not know has no use spell, a spell not in the spell book is
--- skipped), so a wrong or changed ID only means "not shown". Checked in game (probe 0.0.2):
--- Lesser Healing Potion 858 (spell 440), Heavy Linen Bandage 2581 (spell 1159 "First Aid").
--- Not checked in game: everything else in this file.
+local _, ns = ...
 
 -- strongest first: the strongest one in the bags is shown
 ns.POTIONS = { 13446, 3928, 1710, 929, 858, 118 } -- Major .. Minor Healing Potion
@@ -31,10 +28,10 @@ ns.DEFENSIVES = {
 }
 ns.RACIAL_DEFENSIVES = { 20594 } -- Stoneform
 
--- a paladin who tanks must not be told to bubble: it drops the aggro (tank review)
+-- a paladin who tanks must not be told to bubble: it drops the aggro
 ns.TANK_SKIP = { [498] = true, [642] = true }
 
--- cooldowns this short on items come from wand shots (weapon speed, FMF sixth log): ignored
+-- cooldowns this short on items come from wand shots: ignored
 ns.ITEM_GCD = 3
 -- spell cooldowns this short are the global cooldown
 ns.SPELL_GCD = 1.6

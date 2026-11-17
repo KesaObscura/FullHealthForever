@@ -1,6 +1,6 @@
 -- Full Health Forever - settings window. Plain frames, no Blizzard templates (as Full Mana
 -- Forever: templates change between client versions). Every control that can be clicked has a
--- tooltip, also while greyed out (owner rule).
+-- tooltip, also while greyed out.
 
 local _, ns = ...
 local L = ns.L
@@ -344,7 +344,7 @@ local function Build()
   local resetProf = Button(win, L.btnResetProfile, 120)
   resetProf:SetPoint("RIGHT", resetPos, "LEFT", -8, 0)
   Tip(resetProf, L.btnResetProfile, L.tipResetProfile)
-  -- reset asks first: the first click arms, a second one within 4 s resets (FMF 0.9.1)
+  -- reset asks first: the first click arms, a second one within 4 s resets
   resetProf:SetScript("OnClick", function(self)
     local now = GetTime()
     if self.armedAt and now - self.armedAt < 4 then

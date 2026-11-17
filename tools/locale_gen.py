@@ -285,30 +285,30 @@ add("optIconSize", "Icon size", "Symbolgröße", "Размер иконок", "T
 add("tipIconSize", "Width and height of the icons.", "Breite und Höhe der Symbole.", "Ширина и высота иконок.", "Ancho y alto de los iconos.", "Largeur et hauteur des icônes.", "Largura e altura dos ícones.", "아이콘의 너비와 높이.", "图标的宽度和高度。", "圖示的寬度和高度。")
 add("optHealthText", "Health text", "Gesundheitstext", "Текст здоровья", "Texto de salud", "Texte de santé", "Texto de vida", "생명력 텍스트", "生命文字", "生命文字")
 add("tipHealthText",
- "What the bar shows as text. The game fills in the numbers itself: addons cannot read your health in Forever.",
- "Was die Leiste als Text zeigt. Die Zahlen setzt das Spiel selbst ein: Addons können deine Gesundheit in Forever nicht lesen.",
- "Что полоса показывает текстом. Числа подставляет сама игра: в Forever аддоны не могут прочитать твоё здоровье.",
- "Lo que la barra muestra como texto. El juego pone los números: en Forever los addons no pueden leer tu salud.",
- "Ce que la barre affiche en texte. Le jeu remplit les chiffres lui-même : dans Forever, les addons ne peuvent pas lire ta santé.",
- "O que a barra mostra como texto. O próprio jogo preenche os números: no Forever os addons não conseguem ler sua vida.",
- "바에 텍스트로 표시할 내용. 숫자는 게임이 직접 채웁니다. Forever 에서는 애드온이 생명력을 읽을 수 없습니다.",
- "生命条上显示的文字。数字由游戏自己填写：在 Forever 中插件无法读取你的生命值。",
- "生命條上顯示的文字。數字由遊戲自己填寫：在 Forever 中插件無法讀取你的生命值。")
+ "What the bar shows as text.",
+ "Was die Leiste als Text zeigt.",
+ "Что полоса показывает текстом.",
+ "Lo que la barra muestra como texto.",
+ "Ce que la barre affiche en texte.",
+ "O que a barra mostra como texto.",
+ "바에 텍스트로 표시할 내용.",
+ "生命条上显示的文字。",
+ "生命條上顯示的文字。")
 add("htPercent", "Percent", "Prozent", "Проценты", "Porcentaje", "Pourcentage", "Porcentagem", "백분율", "百分比", "百分比")
 add("htValue", "Value", "Wert", "Значение", "Valor", "Valeur", "Valor", "수치", "数值", "數值")
 add("htBoth", "Both", "Beides", "Оба", "Ambos", "Les deux", "Ambos", "둘 다", "两者", "兩者")
 add("htOff", "Off", "Aus", "Нет", "Ninguno", "Aucun", "Nenhum", "끄기", "关闭", "關閉")
 add("optShadow", "Shadow: health a moment ago", "Schatten: Gesundheit von eben", "Тень: здоровье мгновение назад", "Sombra: salud de hace un momento", "Ombre : santé d'il y a un instant", "Sombra: vida de um instante atrás", "그림자: 조금 전 생명력", "阴影：片刻前的生命", "陰影：片刻前的生命")
 add("tipShadow",
- "A dark red bar under your health shows where it was a moment ago: the bigger the gap, the faster you are losing health. Forever hides damage numbers from addons; this is the honest view of them.",
- "Eine dunkelrote Leiste unter deiner Gesundheit zeigt, wo sie eben noch war: je größer die Lücke, desto schneller verlierst du Gesundheit. Forever verbirgt Schadenszahlen vor Addons; das ist der ehrliche Blick darauf.",
- "Тёмно-красная полоса под здоровьем показывает, где оно было мгновение назад: чем больше разрыв, тем быстрее ты теряешь здоровье. Forever скрывает от аддонов числа урона — это честный способ их увидеть.",
- "Una barra rojo oscuro bajo tu salud muestra dónde estaba hace un momento: cuanto mayor el hueco, más rápido pierdes salud. Forever oculta a los addons las cifras de daño; esta es la vista honesta.",
- "Une barre rouge foncé sous ta santé montre où elle était il y a un instant : plus l'écart est grand, plus tu perds de la santé vite. Forever cache les chiffres de dégâts aux addons ; c'est la vue honnête.",
- "Uma barra vermelho-escura sob sua vida mostra onde ela estava um instante atrás: quanto maior a diferença, mais rápido você perde vida. O Forever esconde os números de dano dos addons; esta é a visão honesta.",
- "생명력 아래의 짙은 빨간 바가 조금 전 생명력을 보여 줍니다. 차이가 클수록 빨리 잃고 있는 것입니다. Forever 는 애드온에 피해 수치를 숨기므로 이것이 정직한 표시입니다.",
- "生命条下的深红条显示片刻前的生命：差距越大，掉血越快。Forever 不让插件看到伤害数字，这是诚实的显示方式。",
- "生命條下的深紅條顯示片刻前的生命：差距越大，掉血越快。Forever 不讓插件看到傷害數字，這是誠實的顯示方式。")
+ "A dark red bar under your health shows where it was a moment ago: the bigger the gap, the faster you are losing health.",
+ "Eine dunkelrote Leiste unter deiner Gesundheit zeigt, wo sie eben noch war: je größer die Lücke, desto schneller verlierst du Gesundheit.",
+ "Тёмно-красная полоса под здоровьем показывает, где оно было мгновение назад: чем больше разрыв, тем быстрее ты теряешь здоровье.",
+ "Una barra rojo oscuro bajo tu salud muestra dónde estaba hace un momento: cuanto mayor el hueco, más rápido pierdes salud.",
+ "Une barre rouge foncé sous ta santé montre où elle était il y a un instant : plus l'écart est grand, plus tu perds de la santé vite.",
+ "Uma barra vermelho-escura sob sua vida mostra onde ela estava um instante atrás: quanto maior a diferença, mais rápido você perde vida.",
+ "생명력 아래의 짙은 빨간 바가 조금 전 생명력을 보여 줍니다. 차이가 클수록 빨리 잃고 있는 것입니다.",
+ "生命条下的深红条显示片刻前的生命：差距越大，掉血越快。",
+ "生命條下的深紅條顯示片刻前的生命：差距越大，掉血越快。")
 add("optShadowSec", "Shadow delay", "Schattenverzögerung", "Задержка тени", "Retraso de la sombra", "Retard de l'ombre", "Atraso da sombra", "그림자 지연", "阴影延迟", "陰影延遲")
 add("tipShadowSec", "How far back the shadow looks.", "Wie weit der Schatten zurückblickt.", "Насколько назад смотрит тень.", "Cuánto tiempo atrás mira la sombra.", "Jusqu'où l'ombre regarde en arrière.", "Até quanto tempo atrás a sombra olha.", "그림자가 얼마나 이전을 보여 주는지.", "阴影回看多久之前。", "陰影回看多久之前。")
 add("secondsFmt", "%.1f s", "%.1f s", "%.1f с", "%.1f s", "%.1f s", "%.1f s", "%.1f초", "%.1f 秒", "%.1f 秒")

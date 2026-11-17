@@ -1,14 +1,6 @@
--- Full Health Forever - what is on the screen: the health bar and the icon row.
---
--- Bar: health, the heals in flight and shields drawn after the health fill (anchored to its
--- end, so the game adds the amounts, Lua never does), the "health a moment ago" shadow under
--- it (old secret values kept in a ring and drawn: the gap is the damage), a text.
--- Icons, three layers per slot:
---   base   always, grey: the item or spell is there;
---   calm   (optional) ready, no danger: the icon in colour, dimmed;
---   bright ready AND in danger: full icon with a glow. It sits inside the two danger frames
---          (Engine.ApplyDanger), then in a "ready" frame (Lua: items, own spell timer), then in
---          a frame with the game's own cooldown alpha (spells in combat).
+-- Full Health Forever - what is on the screen: the health bar (health, heals in flight, shields,
+-- the shadow of a moment ago, a text) and the icon row (grey, ready, lit), the aggro icon, the
+-- drag handle.
 
 local _, ns = ...
 local L = ns.L
