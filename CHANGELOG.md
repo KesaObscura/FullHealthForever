@@ -21,8 +21,10 @@ The first version.
 - **`/fhf hold`:** no lit icons until the end of the next fight.
 - Ready icons can show dimmed; grey ones are not ready. Shown only in combat by default; solo,
   party and raid switches.
-- Settings window (`/fhf config`, also in the game's AddOns settings), shared and own
-  profiles, 9 languages.
+- Settings window (`/fhf config`, also in the game's AddOns settings) in the style of the game's
+  own windows, like Full Mana Forever: the metal frame with the logo, gold labels, red buttons,
+  values with arrows ◄ 35 % ►; icons in the frame of the game's action buttons.
+- Shared and own profiles, 9 languages.
 
 **Full Health Forever 0.0.1 - 0.0.4**
 

@@ -131,6 +131,18 @@ local function Slot(i)
   s = CreateFrame("Frame", nil, H.row)
   s.base = s:CreateTexture(nil, "BACKGROUND")
   s.base:SetAllPoints()
+  -- the frame of the game's action buttons around every icon (as in the series), a thin dark
+  -- edge without it
+  local border = CreateFrame("Frame", nil, s)
+  border:SetAllPoints(s)
+  border:SetFrameLevel(H.dangerB:GetFrameLevel() + 4)
+  s.border = border:CreateTexture(nil, "OVERLAY")
+  if ns.Skin and ns.Skin.Atlas(s.border, "UI-HUD-ActionBar-IconFrame") then
+    s.border:SetPoint("TOPLEFT", s, "TOPLEFT", -2, 2)
+    s.border:SetPoint("BOTTOMRIGHT", s, "BOTTOMRIGHT", 3, -3)
+  elseif ns.Skin then
+    ns.Skin.Edge(border, { 0, 0, 0 }, 0.9, "OVERLAY")
+  end
   if s.base.SetDesaturated then s.base:SetDesaturated(true) end
   s.base:SetAlpha(0.35)
   s.calmReady = CreateFrame("Frame", nil, s)
@@ -196,9 +208,10 @@ function H.Layout(db, entries)
     s:ClearAllPoints()
     s:SetPoint("TOPLEFT", H.row, "TOPLEFT", (i - 1) * (size + gap), 0)
     local tex = Icon(entry)
-    s.base:SetTexture(tex)
-    s.calm:SetTexture(tex)
-    s.bright:SetTexture(tex)
+    for _, t in ipairs({ s.base, s.calm, s.bright }) do
+      t:SetTexture(tex)
+      t:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+    end
     s.glow:SetSize(size * 1.75, size * 1.75)
     s:Show()
     s.brightReady:Show()

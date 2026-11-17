@@ -41,10 +41,7 @@ test("the window changes the profile: check, stepper, dropdown, reset asks first
   ok(label, "stepper label")
   local plus
   for _, o in ipairs(M.all) do
-    if o.kind == "Button" and o.text == "+" and o.points and o.points[1] and o.points[1][2] and o.points[1][2].points then
-      local minus = o.points[1][2]
-      if minus.points[1] and minus.points[1][2] == label then plus = o end
-    end
+    if o.kind == "Button" and o.text == "+" and o.points and o.points[1] and o.points[1][2] == label then plus = o end
   end
   ok(plus, "plus button")
   plus.scripts.OnClick(plus)
@@ -64,4 +61,27 @@ test("the window changes the profile: check, stepper, dropdown, reset asks first
   eq(ns.DB().role, "auto", "reset")
   win:Hide()
   eq(ns.optionsOpen, false)
+end)
+
+test("the series look: with the game's textures the window and the icons use them", function()
+  M.reset({ skin = true })
+  M.S.items[858] = { count = 2, spell = 440 }
+  local ns = M.login()
+  local win = ns.OptionsWindow()
+  ns.ToggleOptions(true)
+  ok(win.skinMetal and win.skinMetal.layout == "PortraitFrameTemplate", "the game's window frame with the logo")
+  ok(win.skinPortrait and win.skinPortrait.texture == "Interface\\AddOns\\FullHealthForever\\icon", "our logo")
+  local slot = ns.HUD.slots[1]
+  eq(slot.border.atlas, "UI-HUD-ActionBar-IconFrame", "action button frame around the icon")
+  local arrows, red = 0, 0
+  for _, o in ipairs(M.all) do
+    if o.atlas == "common-dropdown-icon-next" then arrows = arrows + 1 end
+    if o.skinParts then red = red + 1 end
+  end
+  ok(arrows >= 7, "steppers with arrows")
+  ok(red >= 3, "red buttons")
+  -- the colour of the addon only under the title, in the HUD: no red tint on the controls
+  for _, o in ipairs(M.all) do
+    ok(not (o.kind == "Texture" and o.color and o.color[1] == 0.24 and o.color[2] == 0.12), "no old red buttons")
+  end
 end)

@@ -10,12 +10,17 @@ local openList
 
 local COL_W, PAD, ROW = 420, 16, 28
 local VALUE_X = 250
-local BTN_X = VALUE_X + 70
+-- a stepper reads "◄ [ 35 % ] ►": arrow, the value in a field, arrow
+local FIELD_X, FIELD_W = VALUE_X + 26, 60
+local PLUS_X = FIELD_X + FIELD_W + 4
+local Skin = ns.Skin
+local GOLD, WHITE, GREY = Skin.GOLD, Skin.WHITE, Skin.GREY
 
 -- widget helpers (from Full Mana Forever, shortened) -----------------------------------------
 
+-- labels in gold, values in white, like the game's own settings
 local function Label(parent, text, font)
-  local fs = parent:CreateFontString(nil, "OVERLAY", font or "GameFontHighlight")
+  local fs = parent:CreateFontString(nil, "OVERLAY", font or "GameFontNormal")
   fs:SetJustifyH("LEFT")
   fs:SetText(text or "")
   return fs
@@ -41,32 +46,66 @@ local function TipArea(parent, fs, title, text)
   return f
 end
 
+local function FitWidth(b, w)
+  local fs = b:GetFontString()
+  if fs and fs.GetStringWidth then b:SetWidth(math.max(w, math.ceil(fs:GetStringWidth() or 0) + 20)) end
+end
+
+-- a flat button: dropdown bodies and list rows
+local function PlainButton(parent, text, w, h)
+  local b = CreateFrame("Button", nil, parent)
+  b:SetSize(w, h or 22)
+  local hl = b:CreateTexture(nil, "HIGHLIGHT")
+  hl:SetAllPoints()
+  hl:SetColorTexture(1, 0.82, 0, 0.12)
+  b:SetNormalFontObject("GameFontHighlightSmall")
+  b:SetHighlightFontObject("GameFontHighlightSmall")
+  b:SetDisabledFontObject("GameFontDisableSmall")
+  b:SetText(text)
+  FitWidth(b, w)
+  return b
+end
+
+-- an action button: the red button of the game's dialogs
 local function Button(parent, text, w, h)
   local b = CreateFrame("Button", nil, parent)
   b:SetSize(w, h or 22)
-  local bg = b:CreateTexture(nil, "BACKGROUND")
-  bg:SetAllPoints()
-  bg:SetColorTexture(0.24, 0.12, 0.13, 0.95)
-  local hl = b:CreateTexture(nil, "HIGHLIGHT")
-  hl:SetAllPoints()
-  hl:SetColorTexture(1, 0.35, 0.3, 0.3)
+  Skin.RedButton(b)
   b:SetNormalFontObject("GameFontNormalSmall")
   b:SetHighlightFontObject("GameFontHighlightSmall")
   b:SetDisabledFontObject("GameFontDisableSmall")
   b:SetText(text)
-  local fs = b:GetFontString()
-  if fs and fs.GetStringWidth then b:SetWidth(math.max(w, math.ceil(fs:GetStringWidth() or 0) + 20)) end
+  FitWidth(b, w)
+  return b
+end
+
+-- a small square button with ◄ or ►; "-" / "+" when the client lacks the textures
+local function ArrowButton(parent, dir)
+  local b = CreateFrame("Button", nil, parent)
+  b:SetSize(22, 22)
+  if not Skin.Arrow(b, dir) then
+    local bg = b:CreateTexture(nil, "BACKGROUND")
+    bg:SetAllPoints()
+    bg:SetColorTexture(0.16, 0.15, 0.13, 0.95)
+    local hl = b:CreateTexture(nil, "HIGHLIGHT")
+    hl:SetAllPoints()
+    hl:SetColorTexture(1, 0.82, 0, 0.2)
+    b:SetNormalFontObject("GameFontHighlightSmall")
+    b:SetText(dir < 0 and "-" or "+")
+  end
   return b
 end
 
 local function Check(parent, text, get, set, tip, enabledIf)
   local cb = CreateFrame("CheckButton", nil, parent)
   cb:SetSize(24, 24)
-  cb:SetNormalTexture("Interface\\Buttons\\UI-CheckBox-Up")
-  cb:SetPushedTexture("Interface\\Buttons\\UI-CheckBox-Down")
-  cb:SetHighlightTexture("Interface\\Buttons\\UI-CheckBox-Highlight", "ADD")
-  cb:SetCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check")
-  cb:SetDisabledCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check-Disabled")
+  if not Skin.Check(cb) then
+    cb:SetNormalTexture("Interface\\Buttons\\UI-CheckBox-Up")
+    cb:SetPushedTexture("Interface\\Buttons\\UI-CheckBox-Down")
+    cb:SetHighlightTexture("Interface\\Buttons\\UI-CheckBox-Highlight", "ADD")
+    cb:SetCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check")
+    cb:SetDisabledCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check-Disabled")
+  end
   cb.label = Label(parent, text)
   cb.label:SetPoint("LEFT", cb, "RIGHT", 4, 0)
   cb:SetHitRectInsets(0, -math.ceil((cb.label:GetStringWidth() or 0) + 4), 0, 0)
@@ -81,7 +120,8 @@ local function Check(parent, text, get, set, tip, enabledIf)
       local on = enabledIf() and true or false
       cb:SetEnabled(on)
       cb:SetAlpha(on and 1 or 0.6)
-      if on then cb.label:SetTextColor(1, 1, 1) else cb.label:SetTextColor(0.5, 0.5, 0.5) end
+      local c = on and GOLD or GREY
+      cb.label:SetTextColor(c[1], c[2], c[3])
     end
   end
   widgets[#widgets + 1] = cb
@@ -92,12 +132,16 @@ end
 local function Stepper(parent, text, get, set, o)
   local s = {}
   s.label = Label(parent, text .. ":")
-  s.value = Label(parent, "", "GameFontNormal")
-  s.minus = Button(parent, "-", 22)
-  s.plus = Button(parent, "+", 22)
-  s.value:SetPoint("LEFT", s.label, "LEFT", VALUE_X, 0)
-  s.minus:SetPoint("LEFT", s.label, "LEFT", BTN_X, 0)
-  s.plus:SetPoint("LEFT", s.minus, "RIGHT", 4, 0)
+  s.field = CreateFrame("Frame", nil, parent)
+  s.field:SetSize(FIELD_W, 20)
+  s.field:SetPoint("LEFT", s.label, "LEFT", FIELD_X, 0)
+  Skin.Field(s.field)
+  s.value = Label(s.field, "", "GameFontHighlight")
+  s.value:SetPoint("CENTER", s.field, "CENTER", 0, 0)
+  s.minus = ArrowButton(parent, -1)
+  s.plus = ArrowButton(parent, 1)
+  s.minus:SetPoint("LEFT", s.label, "LEFT", VALUE_X, 0)
+  s.plus:SetPoint("LEFT", s.label, "LEFT", PLUS_X, 0)
   TipArea(parent, s.label, text, o.tip)
   Tip(s.minus, text, o.tip)
   Tip(s.plus, text, o.tip)
@@ -121,7 +165,8 @@ local function Stepper(parent, text, get, set, o)
       b[1]:SetEnabled(can)
       b[1]:SetAlpha(can and 1 or 0.3)
     end
-    if on then s.label:SetTextColor(1, 1, 1) else s.label:SetTextColor(0.5, 0.5, 0.5) end
+    local c = on and GOLD or GREY
+    s.label:SetTextColor(c[1], c[2], c[3])
   end
   widgets[#widgets + 1] = s
   return s
@@ -129,8 +174,9 @@ end
 
 -- a button that opens a list of choices below it; dd.Select(value) = a click on a row
 local function Dropdown(parent, width, entries, getText, onPick, title, tip)
-  local dd = Button(parent, " ", width)
+  local dd = PlainButton(parent, " ", width)
   dd:SetWidth(width)
+  Skin.Field(dd)
   local fs = dd:GetFontString()
   if fs then
     fs:ClearAllPoints()
@@ -138,11 +184,13 @@ local function Dropdown(parent, width, entries, getText, onPick, title, tip)
     fs:SetPoint("RIGHT", -24, 0)
     fs:SetJustifyH("LEFT")
   end
-  local arrow = dd:CreateTexture(nil, "OVERLAY")
-  arrow:SetTexture("Interface\\ChatFrame\\ChatFrameExpandArrow")
-  arrow:SetSize(12, 12)
-  arrow:SetPoint("RIGHT", -6, 0)
-  arrow:SetRotation(-math.pi / 2)
+  if not Skin.DropArrow(dd) then
+    local arrow = dd:CreateTexture(nil, "OVERLAY")
+    arrow:SetTexture("Interface\\ChatFrame\\ChatFrameExpandArrow")
+    arrow:SetSize(12, 12)
+    arrow:SetPoint("RIGHT", -6, 0)
+    arrow:SetRotation(-math.pi / 2)
+  end
   Tip(dd, title, tip)
   local list = CreateFrame("Frame", nil, dd)
   list:SetFrameStrata("FULLSCREEN_DIALOG")
@@ -151,7 +199,8 @@ local function Dropdown(parent, width, entries, getText, onPick, title, tip)
   list:EnableMouse(true)
   local lbg = list:CreateTexture(nil, "BACKGROUND")
   lbg:SetAllPoints()
-  lbg:SetColorTexture(0.06, 0.03, 0.04, 0.98)
+  lbg:SetColorTexture(Skin.BG[1], Skin.BG[2], Skin.BG[3], 0.98)
+  Skin.Edge(list, Skin.EDGE, 1)
   list:Hide()
   dd.list = list
   function dd.Select(value)
@@ -162,7 +211,7 @@ local function Dropdown(parent, width, entries, getText, onPick, title, tip)
   local maxW = width
   dd.rows = {}
   for i, e in ipairs(entries) do
-    local r = Button(list, e.text, width, 20)
+    local r = PlainButton(list, e.text, width, 20)
     r:SetPoint("TOPLEFT", list, "TOPLEFT", 2, -2 - (i - 1) * 21)
     r:SetScript("OnClick", function() dd.Select(e.value) end)
     Tip(r, e.text, e.tip or tip)
@@ -183,13 +232,11 @@ local function Dropdown(parent, width, entries, getText, onPick, title, tip)
   return dd
 end
 
--- a section title with a line to the end of its column (col 1 or 2)
+-- a section title: white text with the game's divider under it, to the end of its column
 local function Header(parent, text, col)
-  local fs = Label(parent, text, "GameFontNormal")
-  local line = parent:CreateTexture(nil, "ARTWORK")
-  line:SetColorTexture(1, 0.35, 0.3, 0.5)
-  line:SetHeight(1)
-  line:SetPoint("LEFT", fs, "RIGHT", 6, 0)
+  local fs = Label(parent, text, _G.GameFontHighlightMedium and "GameFontHighlightMedium" or "GameFontHighlight")
+  local line = Skin.Divider(parent)
+  line:SetPoint("TOPLEFT", fs, "BOTTOMLEFT", 0, -3)
   line:SetPoint("RIGHT", parent, "LEFT", (col or 1) * COL_W - PAD, 0)
   return fs
 end
@@ -205,7 +252,7 @@ local TEXT_TEXT = { percent = "htPercent", value = "htValue", both = "htBoth", o
 local function Build()
   if win then return win end
   win = CreateFrame("Frame", "FullHealthForeverOptions", UIParent)
-  win:SetSize(COL_W * 2, 470)
+  win:SetSize(COL_W * 2, 500)
   win:SetFrameStrata("DIALOG")
   win:SetMovable(true)
   win:SetClampedToScreen(true)
@@ -214,7 +261,7 @@ local function Build()
   local titleBar = CreateFrame("Frame", nil, win)
   titleBar:SetPoint("TOPLEFT")
   titleBar:SetPoint("TOPRIGHT")
-  titleBar:SetHeight(36)
+  titleBar:SetHeight(32)
   titleBar:EnableMouse(true)
   titleBar:RegisterForDrag("LeftButton")
   titleBar:SetScript("OnDragStart", function() win:StartMoving() end)
@@ -224,17 +271,22 @@ local function Build()
     if point then ns.Acct().optPoint = { point, rel or point, x or 0, y or 0 } end
   end)
   Tip(titleBar, L.addonName, L.tipDragWindow)
-  local bg = win:CreateTexture(nil, "BACKGROUND")
-  bg:SetAllPoints()
-  bg:SetColorTexture(0.05, 0.03, 0.04, 0.96)
-  local title = Label(win, L.addonName .. " " .. ns.VERSION, "GameFontNormalLarge")
-  title:SetPoint("TOPLEFT", PAD, -12)
+  Skin.Window(win, 0, { portrait = Skin.LOGO })
+  local title = Label(win, L.addonName, "GameFontNormal")
+  Skin.PlaceTitle(title, win, PAD)
+  local version = Label(win, ns.VERSION, "GameFontDisableSmall")
+  version:SetPoint("BOTTOMLEFT", PAD, 10)
+  local close = Skin.Close(win) or PlainButton(win, "X", 22)
+  Skin.PlaceClose(close, win)
+  close:SetScript("OnClick", function() win:Hide() end)
+  Tip(close, L.btnClose, L.tipClose)
   if UISpecialFrames then table.insert(UISpecialFrames, "FullHealthForeverOptions") end
   win:SetScript("OnShow", function() ns.optionsOpen = true; ns.UpdateVisibility() end)
   win:SetScript("OnHide", function() ns.optionsOpen = false; ns.UpdateVisibility() end)
 
   local left, right = PAD, COL_W + PAD
-  local y = { -44, -44 }
+  local top = Skin.ContentTop(win)
+  local y = { top, top }
   local function At(col, fs, dy)
     fs:SetPoint("TOPLEFT", win, "TOPLEFT", col == 1 and left or right, y[col])
     y[col] = y[col] - (dy or ROW)
@@ -333,12 +385,8 @@ local function Build()
     L.tipThreat))
 
   -- buttons at the bottom
-  local close = Button(win, L.btnClose, 90)
-  close:SetPoint("BOTTOMRIGHT", -PAD, 12)
-  close:SetScript("OnClick", function() win:Hide() end)
-  Tip(close, L.btnClose, L.tipClose)
   local resetPos = Button(win, L.btnResetPos, 120)
-  resetPos:SetPoint("RIGHT", close, "LEFT", -8, 0)
+  resetPos:SetPoint("BOTTOMRIGHT", -PAD, 12)
   resetPos:SetScript("OnClick", function() ns.ResetPosition(); ns.Print(L.posReset) end)
   Tip(resetPos, L.btnResetPos, L.tipResetPos)
   local resetProf = Button(win, L.btnResetProfile, 120)
@@ -359,7 +407,7 @@ local function Build()
   end)
   win.resetProf = resetProf
   local hold = Button(win, L.btnHold, 90)
-  hold:SetPoint("BOTTOMLEFT", PAD, 12)
+  hold:SetPoint("BOTTOMLEFT", PAD + 50, 12)
   hold:SetScript("OnClick", function() ns.Hold() end)
   Tip(hold, L.btnHold, L.tipHold)
 

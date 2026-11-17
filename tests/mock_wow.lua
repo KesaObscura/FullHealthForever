@@ -69,6 +69,9 @@ function methods:RegisterUnitEvent(e) self.events[e] = true; return true end
 function methods:UnregisterAllEvents() self.events = {} end
 function methods:CreateFontString() return new("FontString", self) end
 function methods:CreateTexture() return new("Texture", self) end
+function methods:CreateMaskTexture() return new("MaskTexture", self) end
+function methods:SetAtlas(a) self.atlas = a; return true end
+function methods:SetColorTexture(r, g, b, a) self.color = { r, g, b, a } end
 function methods:SetText(t)
   if t ~= nil and type(t) ~= "string" and type(t) ~= "number" and not isSecret(t) then error("SetText wants a string") end
   self.text = t
@@ -197,6 +200,12 @@ function M.reset(opts)
   _G.Enum = { LuaCurveType = { Step = 1 }, UnitIncomingHealClampMode = { MissingHealth = 0 },
     SpellBookSpellBank = { Player = 0 } }
   _G.CurveConstants = { ScaleTo100 = "S100" }
+  -- the series' look: atlases and the game's window frame only when a test asks for them
+  _G.C_Texture, _G.NineSliceUtil = nil, nil
+  if opts.skin then
+    _G.C_Texture = { GetAtlasInfo = function(name) return { file = name } end }
+    _G.NineSliceUtil = { ApplyLayoutByName = function(f, layout) f.layout = layout end }
+  end
   _G.C_CurveUtil = { CreateColorCurve = NewCurve }
 
   -- health: secret always
