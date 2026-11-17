@@ -252,7 +252,7 @@ local TEXT_TEXT = { percent = "htPercent", value = "htValue", both = "htBoth", o
 local function Build()
   if win then return win end
   win = CreateFrame("Frame", "FullHealthForeverOptions", UIParent)
-  win:SetSize(COL_W * 2, 500)
+  win:SetSize(COL_W * 2, 560)
   win:SetFrameStrata("DIALOG")
   win:SetMovable(true)
   win:SetClampedToScreen(true)
@@ -272,10 +272,9 @@ local function Build()
   end)
   Tip(titleBar, L.addonName, L.tipDragWindow)
   Skin.Window(win, 0, { portrait = Skin.LOGO })
-  local title = Label(win, L.addonName, "GameFontNormal")
+  -- the title with the version, as in the series
+  local title = Label(win, L.addonName .. " |cff9d9d9dv" .. ns.VERSION .. "|r", "GameFontNormal")
   Skin.PlaceTitle(title, win, PAD)
-  local version = Label(win, ns.VERSION, "GameFontDisableSmall")
-  version:SetPoint("BOTTOMLEFT", PAD, 10)
   local close = Skin.Close(win) or PlainButton(win, "X", 22)
   Skin.PlaceClose(close, win)
   close:SetScript("OnClick", function() win:Hide() end)
@@ -286,15 +285,27 @@ local function Build()
 
   local left, right = PAD, COL_W + PAD
   local top = Skin.ContentTop(win)
+  -- the profile in use, at the top over both columns (as in Full Mana Forever)
+  local profLabel = Label(win, L.optProfile .. ":")
+  profLabel:SetPoint("TOPLEFT", win, "TOPLEFT", right, top)
+  local prof = Dropdown(win, 150, {
+    { value = "shared", text = L.profSharedName },
+    { value = "own", text = L.profOwnName },
+  }, function() return ns.Profiles.IsOwn() and L.profOwnName or L.profSharedName end,
+    function(v) if not ns.Profiles.Use(v) then ns.Print(L.profNone) end end, L.optProfile, L.tipProfile)
+  prof:SetPoint("LEFT", profLabel, "LEFT", VALUE_X, 0)
+  TipArea(win, profLabel, L.optProfile, L.tipProfile)
+  top = top - ROW - 4
   local y = { top, top }
   local function At(col, fs, dy)
     fs:SetPoint("TOPLEFT", win, "TOPLEFT", col == 1 and left or right, y[col])
     y[col] = y[col] - (dy or ROW)
   end
 
-  -- left column: general, when to light up, profile
+  -- left column: general, when to light up
   At(1, Header(win, L.secGeneral, 1))
-  At(1, Check(win, L.optLocked, function() return DB().locked end, function(v) ns.SetLocked(v) end, L.tipLocked))
+  At(1, Check(win, L.optUnlock, function() return not DB().locked end, function(v) ns.SetLocked(not v) end,
+    L.tipUnlock))
   At(1, Check(win, L.optOnlyCombat, function() return DB().onlyCombat end, function(v) DB().onlyCombat = v end,
     L.tipOnlyCombat))
   local solo = Check(win, L.showSolo, function() return DB().showSolo end, function(v) DB().showSolo = v end,
@@ -308,21 +319,6 @@ local function Build()
   raid:SetPoint("LEFT", solo, "LEFT", 260, 0)
   At(1, Stepper(win, L.optScale, function() return DB().scale end, function(v) DB().scale = v end,
     { step = 0.05, lo = 0.5, hi = 2, fmt = Pct, tip = L.tipScale }).label)
-  local langs = { { value = "auto", text = L.langAuto } }
-  for _, l in ipairs(ns.LANGUAGES) do langs[#langs + 1] = { value = l.code, text = l.name } end
-  local langLabel = Label(win, L.optLanguage .. ":")
-  At(1, langLabel)
-  local lang = Dropdown(win, 150, langs, function()
-    local code = ns.Acct().language
-    if code == "auto" then return L.langAuto end
-    return ns.LanguageName(code)
-  end, function(v)
-    ns.Acct().language = v
-    ns.Print(L.langReload)
-  end, L.optLanguage, L.tipLanguage)
-  lang:SetPoint("LEFT", langLabel, "LEFT", VALUE_X, 0)
-  TipArea(win, langLabel, L.optLanguage, L.tipLanguage)
-
   y[1] = y[1] - 6
   At(1, Header(win, L.secDanger, 1))
   local roles = {}
@@ -341,18 +337,6 @@ local function Build()
   Line("thrNoAggro", L.optThrNoAggro, L.tipThrNoAggro)
   Line("thrTank", L.optThrTank, L.tipThrTank)
   At(1, Check(win, L.optCalm, function() return DB().calmIcons end, function(v) DB().calmIcons = v end, L.tipCalm))
-
-  y[1] = y[1] - 6
-  At(1, Header(win, L.secProfile, 1))
-  local profLabel = Label(win, L.optProfile .. ":")
-  At(1, profLabel)
-  local prof = Dropdown(win, 150, {
-    { value = "shared", text = L.profSharedName },
-    { value = "own", text = L.profOwnName },
-  }, function() return ns.Profiles.IsOwn() and L.profOwnName or L.profSharedName end,
-    function(v) if not ns.Profiles.Use(v) then ns.Print(L.profNone) end end, L.optProfile, L.tipProfile)
-  prof:SetPoint("LEFT", profLabel, "LEFT", VALUE_X, 0)
-  TipArea(win, profLabel, L.optProfile, L.tipProfile)
 
   -- right column: icons, bar
   At(2, Header(win, L.secIcons, 2))
@@ -384,7 +368,27 @@ local function Build()
   At(2, Check(win, L.optThreat, function() return DB().threatIcon end, function(v) DB().threatIcon = v end,
     L.tipThreat))
 
-  -- buttons at the bottom
+  -- the bottom row, for the whole window: a divider, the language on the left (it is for all
+  -- characters), the buttons on the right
+  local sep = Skin.Divider(win)
+  sep:SetPoint("BOTTOMLEFT", win, "BOTTOMLEFT", PAD, 46)
+  sep:SetPoint("BOTTOMRIGHT", win, "BOTTOMRIGHT", -PAD, 46)
+  local langs = { { value = "auto", text = L.langAuto } }
+  for _, l in ipairs(ns.LANGUAGES) do langs[#langs + 1] = { value = l.code, text = l.name } end
+  local langLabel = Label(win, L.optLanguage .. ":")
+  langLabel:SetPoint("BOTTOMLEFT", win, "BOTTOMLEFT", PAD, 16)
+  local lang = Dropdown(win, 150, langs, function()
+    local code = ns.Acct().language
+    if code == "auto" then return L.langAuto end
+    return ns.LanguageName(code)
+  end, function(v)
+    ns.Acct().language = v
+    ns.Print(L.langReload)
+  end, L.optLanguage, L.tipLanguage)
+  lang:SetPoint("LEFT", langLabel, "LEFT", 120, 0)
+  TipArea(win, langLabel, L.optLanguage, L.tipLanguage)
+
+
   local resetPos = Button(win, L.btnResetPos, 120)
   resetPos:SetPoint("BOTTOMRIGHT", -PAD, 12)
   resetPos:SetScript("OnClick", function() ns.ResetPosition(); ns.Print(L.posReset) end)
@@ -407,7 +411,7 @@ local function Build()
   end)
   win.resetProf = resetProf
   local hold = Button(win, L.btnHold, 90)
-  hold:SetPoint("BOTTOMLEFT", PAD + 50, 12)
+  hold:SetPoint("RIGHT", resetProf, "LEFT", -8, 0)
   hold:SetScript("OnClick", function() ns.Hold() end)
   Tip(hold, L.btnHold, L.tipHold)
 

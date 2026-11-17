@@ -99,28 +99,48 @@ function H.Build()
   H.hold:Hide()
   H.slots = {}
 
-  -- unlocked: a handle over everything to drag the frame; right-click opens the settings
-  local drag = CreateFrame("Button", nil, f)
-  drag:SetAllPoints()
-  drag:SetFrameLevel(f:GetFrameLevel() + 20)
-  local dbg = drag:CreateTexture(nil, "BACKGROUND")
-  dbg:SetAllPoints()
-  dbg:SetColorTexture(0.2, 0.45, 1, 0.25)
-  drag.label = drag:CreateFontString(nil, "OVERLAY")
-  Font(drag.label, 11)
-  drag.label:SetPoint("BOTTOM", drag, "TOP", 0, 2)
-  drag.label:SetText(L.dragHint)
-  drag:RegisterForDrag("LeftButton")
-  if drag.RegisterForClicks then drag:RegisterForClicks("RightButtonUp") end
-  drag:SetScript("OnDragStart", function() f:StartMoving() end)
-  drag:SetScript("OnDragStop", function()
-    f:StopMovingOrSizing()
+  -- unlocked (as in the series): a faint fill with an edge in the addon's colour, the name above,
+  -- and above it two buttons: lock, settings. The frame itself is dragged.
+  local a = ns.Skin and ns.Skin.ACCENT or { 0.88, 0.2, 0.24 }
+  H.unlockBg = f:CreateTexture(nil, "BACKGROUND")
+  H.unlockBg:SetPoint("TOPLEFT", -4, 4)
+  H.unlockBg:SetPoint("BOTTOMRIGHT", 4, -4)
+  H.unlockBg:SetColorTexture(a[1], a[2], a[3], 0.12)
+  H.unlockEdge = CreateFrame("Frame", nil, f)
+  H.unlockEdge:SetAllPoints(H.unlockBg)
+  if ns.Skin then ns.Skin.Edge(H.unlockEdge, a, 0.9, "BACKGROUND") end
+  H.label = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+  H.label:SetPoint("BOTTOM", f, "TOP", 0, 6)
+  H.label:SetText(L.addonName)
+  local function FrameButton(text, tipTitle, tipText, onClick)
+    local b = CreateFrame("Button", nil, f)
+    b:SetHeight(22)
+    if ns.Skin then ns.Skin.RedButton(b) end
+    b:SetNormalFontObject("GameFontNormalSmall")
+    b:SetHighlightFontObject("GameFontHighlightSmall")
+    b:SetText(text)
+    local fs = b:GetFontString()
+    b:SetWidth(math.max(60, math.ceil((fs and fs:GetStringWidth() or 0) + 16)))
+    b:SetScript("OnClick", onClick)
+    Tip(b, tipTitle, tipText)
+    return b
+  end
+  H.lockBtn = FrameButton(L.btnLock, L.btnLock, L.tipBtnLock, function()
+    if ns.SetLocked then ns.SetLocked(true) end
+  end)
+  H.lockBtn:SetPoint("BOTTOMRIGHT", H.label, "TOP", -2, 4)
+  H.cfgBtn = FrameButton(L.btnSettings, L.btnSettings, L.tipBtnSettings, function()
+    if ns.ToggleOptions then ns.ToggleOptions(true) end
+  end)
+  H.cfgBtn:SetPoint("BOTTOMLEFT", H.label, "TOP", 2, 4)
+  f:RegisterForDrag("LeftButton")
+  f:SetScript("OnDragStart", function(self) self:StartMoving() end)
+  f:SetScript("OnDragStop", function(self)
+    self:StopMovingOrSizing()
     if ns.SavePosition then ns.SavePosition() end
   end)
-  drag:SetScript("OnClick", function() if ns.ToggleOptions then ns.ToggleOptions(true) end end)
-  Tip(drag, L.addonName, L.dragTip)
-  drag:Hide()
-  H.drag = drag
+  Tip(f, L.addonName, L.dragTip)
+  H.SetUnlocked(false)
   return f
 end
 
@@ -173,14 +193,22 @@ local function Slot(i)
   return s
 end
 
+local PLACEHOLDER = {
+  stone = "Interface\\Icons\\INV_Stone_04",
+  potion = "Interface\\Icons\\INV_Potion_51",
+  bandage = "Interface\\Icons\\INV_Misc_Bandage_15",
+  defensive = "Interface\\Icons\\Spell_Holy_PowerWordShield",
+}
+
 local function Icon(entry)
+  if entry.kind == "placeholder" then return PLACEHOLDER[entry.group] end
   if entry.kind == "item" then
     return E.Call(C_Item and C_Item.GetItemIconByID or GetItemIcon, entry.id) or "Interface\\Icons\\INV_Misc_QuestionMark"
   end
   return E.Call(C_Spell and C_Spell.GetSpellTexture, entry.id) or "Interface\\Icons\\INV_Misc_QuestionMark"
 end
 
--- places everything; entries: { kind = "item" | "spell", id, name, group }
+-- places everything; entries: { kind = "item" | "spell" | "placeholder", id, name, group }
 function H.Layout(db, entries)
   H.Build()
   local size, gap = db.iconSize, 4
@@ -200,7 +228,7 @@ function H.Layout(db, entries)
   local rowW = math.max(0, n * size + (n - 1) * gap)
   H.row:SetSize(math.max(rowW, 1), size)
   H.row:ClearAllPoints()
-  H.row:SetPoint("TOP", H.bar, "BOTTOM", 0, -6)
+  H.row:SetPoint("TOPLEFT", H.bar, "BOTTOMLEFT", 0, -6)
   for i, entry in ipairs(entries) do
     local s = Slot(i)
     s.entry = entry
@@ -293,7 +321,11 @@ function H.Update(db, st)
     local e = s.entry
     if e then
       local ready
-      if e.kind == "item" then
+      if e.kind == "placeholder" then
+        -- unlocked, nothing of this group there: grey, never lit
+        ready = false
+        s.count:SetText("")
+      elseif e.kind == "item" then
         ready = E.ItemReady(e.id, st.now)
         if ready and e.group == "bandage" then
           ready = not st.mobOnMe and not (st.bandagedUntil and st.bandagedUntil > st.now)
@@ -314,7 +346,10 @@ function H.Update(db, st)
         end
       end
       s.ready = ready
-      s.brightReady:SetAlpha(ready and 1 or 0)
+      -- out of combat only a bandage may light up: after a fight you eat, a potion, a
+      -- healthstone or a defensive would be wasted
+      local mayLight = ready and (st.inCombat or e.group == "bandage")
+      s.brightReady:SetAlpha(mayLight and 1 or 0)
       s.calmReady:SetAlpha((ready and db.calmIcons) and 1 or 0)
     end
   end
@@ -329,5 +364,10 @@ end
 
 function H.SetUnlocked(on)
   H.Build()
-  H.drag:SetShown(on and true or false)
+  on = on and true or false
+  H.frame:EnableMouse(on)
+  for _, r in ipairs({ H.unlockBg, H.unlockEdge, H.label, H.lockBtn, H.cfgBtn }) do r:SetShown(on) end
 end
+
+-- a fresh shadow after the frame was hidden (old values would draw a false gap)
+function H.ResetShadow() ring, ringPos = {}, 1 end

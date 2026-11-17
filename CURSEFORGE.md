@@ -19,7 +19,7 @@
 ## Commands
 
 - `/fhf` help, `/fhf config` settings (also in Esc > Options > AddOns)
-- `/fhf unlock` / `/fhf lock` move the frame (it locks itself when a fight starts)
+- `/fhf unlock` / `/fhf lock` move the frame (also: right-click in the addon menu at the minimap; a fight locks it)
 - `/fhf hold` no lit icons until the end of the next fight
 - `/fhf reset` frame back to its place, `/fhf profile own | shared`, `/fhf status` (for bug reports)
 

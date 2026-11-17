@@ -130,17 +130,16 @@ add("langReload", "The language changes after /reload.", "Die Sprache wechselt n
 add("holdLabel", "HOLD", "PAUSE", "ПАУЗА", "PAUSA", "PAUSE", "PAUSA", "보류", "暂停", "暫停")
 add("aggroLabel", "AGGRO", "AGGRO", "АГРО", "AGGRO", "AGGRO", "AGGRO", "어그로", "仇恨", "仇恨")
 add("lostLabel", "LOOSE", "FREI", "СОРВАЛСЯ", "SUELTO", "LIBRE", "SOLTO", "놓침", "脱离", "脫離")
-add("dragHint", "Full Health Forever: drag me", "Full Health Forever: zieh mich", "Full Health Forever: перетащи меня", "Full Health Forever: arrástrame", "Full Health Forever : fais-moi glisser", "Full Health Forever: arraste-me", "Full Health Forever: 끌어서 옮기기", "Full Health Forever：拖动我", "Full Health Forever：拖動我")
 add("dragTip",
- "Drag to move the frame. Right-click: settings. Lock it in the settings or with /fhf lock.",
- "Ziehen verschiebt den Rahmen. Rechtsklick: Einstellungen. Sperren in den Einstellungen oder mit /fhf lock.",
- "Перетащи, чтобы передвинуть рамку. Правый клик — настройки. Закрепить можно в настройках или командой /fhf lock.",
- "Arrastra para mover el marco. Clic derecho: ajustes. Fíjalo en los ajustes o con /fhf lock.",
- "Fais glisser pour déplacer le cadre. Clic droit : réglages. Verrouille-le dans les réglages ou avec /fhf lock.",
- "Arraste para mover o quadro. Clique direito: configurações. Trave nas configurações ou com /fhf lock.",
- "끌어서 프레임을 옮깁니다. 오른쪽 클릭: 설정. 설정이나 /fhf lock 으로 잠급니다.",
- "拖动以移动框体。右键：设置。可在设置中或用 /fhf lock 锁定。",
- "拖動以移動框架。右鍵：設定。可在設定中或用 /fhf lock 鎖定。")
+ "Drag to move the frame. Lock it with the button above or in the settings.",
+ "Ziehen verschiebt den Rahmen. Sperren mit der Schaltfläche darüber oder in den Einstellungen.",
+ "Перетащи, чтобы передвинуть рамку. Закрепить — кнопкой сверху или в настройках.",
+ "Arrastra para mover el marco. Fíjalo con el botón de arriba o en los ajustes.",
+ "Fais glisser pour déplacer le cadre. Verrouille-le avec le bouton au-dessus ou dans les réglages.",
+ "Arraste para mover o quadro. Trave com o botão acima ou nas configurações.",
+ "끌어서 프레임을 옮깁니다. 위의 버튼이나 설정에서 잠급니다.",
+ "拖动以移动框体。用上方按钮或在设置中锁定。",
+ "拖動以移動框架。用上方按鈕或在設定中鎖定。")
 add("tipDragWindow",
  "Drag the title to move the window. Esc closes it.",
  "Am Titel ziehen verschiebt das Fenster. Esc schließt es.",
@@ -155,22 +154,34 @@ add("cmpLeft", "Left-click", "Linksklick", "Левый клик", "Clic izquierd
 add("cmpRight", "Right-click", "Rechtsklick", "Правый клик", "Clic derecho", "Clic droit", "Clique direito", "오른쪽 클릭", "右键", "右鍵")
 add("cmpSettings", "Settings", "Einstellungen", "Настройки", "Opciones", "Options", "Opções", "설정", "设置", "設定")
 add("cmpMove", "Move the frame", "Rahmen verschieben", "Передвинуть рамку", "Mover el marco", "Déplacer le cadre", "Mover o quadro", "프레임 이동", "移动框体", "移動框架")
+add("optUnlock", "Unlock frame (test mode)", "Rahmen entsperren (Testmodus)", "Разблокировать рамку (режим теста)", "Desbloquear marco (modo prueba)", "Déverrouiller le cadre (mode test)", "Destravar quadro (modo teste)", "프레임 잠금 해제 (테스트 모드)", "解锁框体（测试模式）", "解鎖框架（測試模式）")
+add("tipUnlock",
+ "Drag the frame. Everything that is switched on shows, whatever your health or bags. Switch it off when done; a fight locks it too.",
+ "Zieh den Rahmen. Alles Eingeschaltete wird angezeigt, egal wie viel Gesundheit du hast oder was in den Taschen ist. Danach wieder ausschalten; ein Kampf sperrt ihn auch.",
+ "Перетащи рамку. Показывается всё, что включено, независимо от здоровья и сумок. Когда закончишь, выключи; бой тоже её закрепит.",
+ "Arrastra el marco. Se muestra todo lo activado, sea cual sea tu salud o tus bolsas. Desactívalo al terminar; un combate también lo fija.",
+ "Fais glisser le cadre. Tout ce qui est activé s'affiche, quels que soient ta santé et tes sacs. Désactive-le ensuite ; un combat le verrouille aussi.",
+ "Arraste o quadro. Tudo o que está ativado aparece, não importa sua vida ou suas bolsas. Desative ao terminar; um combate também o trava.",
+ "프레임을 끌어 옮기세요. 켜 둔 것은 생명력이나 가방과 상관없이 모두 표시됩니다. 끝나면 끄세요. 전투가 시작되어도 잠깁니다.",
+ "拖动框体。所有已开启的内容都会显示，不管生命和背包如何。完成后请关闭；战斗也会锁定它。",
+ "拖動框架。所有已開啟的內容都會顯示，不管生命和背包如何。完成後請關閉；戰鬥也會鎖定它。")
+add("btnLock", "Lock", "Sperren", "Закрепить", "Bloquear", "Verrouiller", "Travar", "잠금", "锁定", "鎖定")
+add("tipBtnLock",
+ "Locks the frame: icons light up only when they should, and it can no longer be dragged.",
+ "Sperrt den Rahmen: Symbole leuchten nur noch, wenn sie sollen, und er lässt sich nicht mehr ziehen.",
+ "Закрепляет рамку: иконки загораются только тогда, когда нужно, и её больше нельзя тащить.",
+ "Bloquea el marco: los iconos solo se iluminan cuando deben y ya no se puede arrastrar.",
+ "Verrouille le cadre : les icônes ne s'allument plus que quand il le faut, et il ne peut plus être déplacé.",
+ "Trava o quadro: os ícones só acendem quando devem e ele não pode mais ser arrastado.",
+ "프레임을 잠급니다: 아이콘은 필요할 때만 켜지고 더 이상 끌 수 없습니다.",
+ "锁定框体：图标只在需要时亮起，且不能再拖动。",
+ "鎖定框架：圖示只在需要時亮起，且不能再拖動。")
+add("btnSettings", "Settings", "Einstellungen", "Настройки", "Ajustes", "Réglages", "Configurações", "설정", "设置", "設定")
+add("tipBtnSettings", "Opens the settings window.", "Öffnet das Einstellungsfenster.", "Открывает окно настроек.", "Abre la ventana de ajustes.", "Ouvre la fenêtre des réglages.", "Abre a janela de configurações.", "설정 창을 엽니다.", "打开设置窗口。", "開啟設定視窗。")
 add("secGeneral", "General", "Allgemein", "Общее", "General", "Général", "Geral", "일반", "常规", "一般")
 add("secDanger", "When to light up", "Wann aufleuchten", "Когда загораться", "Cuándo iluminarse", "Quand s'allumer", "Quando acender", "켜지는 때", "何时亮起", "何時亮起")
 add("secIcons", "Icons", "Symbole", "Иконки", "Iconos", "Icônes", "Ícones", "아이콘", "图标", "圖示")
 add("secBar", "Health bar", "Gesundheitsleiste", "Полоса здоровья", "Barra de salud", "Barre de santé", "Barra de vida", "생명력 바", "生命条", "生命條")
-add("secProfile", "Profile", "Profil", "Профиль", "Perfil", "Profil", "Perfil", "프로필", "配置", "設定檔")
-add("optLocked", "Lock frame", "Rahmen sperren", "Закрепить рамку", "Fijar marco", "Verrouiller le cadre", "Travar quadro", "프레임 잠금", "锁定框体", "鎖定框架")
-add("tipLocked",
- "Unlocked, the frame shows all the time and can be dragged. It locks itself when a fight starts.",
- "Entsperrt ist der Rahmen immer sichtbar und lässt sich ziehen. Beim Kampfbeginn sperrt er sich selbst.",
- "Откреплённая рамка видна всегда и перетаскивается. Когда начинается бой, она закрепляется сама.",
- "Desbloqueado, el marco se ve siempre y se puede arrastrar. Se fija solo al empezar un combate.",
- "Déverrouillé, le cadre est toujours visible et peut être déplacé. Il se verrouille tout seul au début d'un combat.",
- "Destravado, o quadro aparece o tempo todo e pode ser arrastado. Ele trava sozinho quando um combate começa.",
- "잠금 해제하면 프레임이 항상 보이고 끌어서 옮길 수 있습니다. 전투가 시작되면 저절로 잠깁니다.",
- "解锁后框体始终显示并可拖动。战斗开始时会自动锁定。",
- "解鎖後框架始終顯示並可拖動。戰鬥開始時會自動鎖定。")
 add("optOnlyCombat", "Show only in combat", "Nur im Kampf zeigen", "Показывать только в бою", "Mostrar solo en combate", "Afficher seulement en combat", "Mostrar só em combate", "전투 중에만 표시", "仅在战斗中显示", "僅在戰鬥中顯示")
 add("tipOnlyCombat",
  "Out of combat the bar and the icons are hidden. While the settings are open or the frame is unlocked, it always shows.",

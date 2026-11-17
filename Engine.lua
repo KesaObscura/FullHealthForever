@@ -200,7 +200,7 @@ function E.SpellReady(name, id, now)
   local r = readyAt[name]
   if r and r - now > 0.05 then return false end
   local usable = Call(C_Spell and C_Spell.IsSpellUsable, id)
-  if usable == false then return false end
+  if not IsSecret(usable) and usable == false then return false end
   return true
 end
 
