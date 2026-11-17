@@ -5,7 +5,7 @@ local L = ns.L
 local E = ns.Engine
 local H = ns.HUD
 
-ns.VERSION = "0.1.0"
+ns.VERSION = "0.1.2"
 ns.BUG_URL = "https://github.com/KesaObscura/FullHealthForever/issues"
 
 -- profile defaults
@@ -96,7 +96,11 @@ function ns.Entries(role)
       if g == "stone" or g == "potion" or g == "bandage" then
         local list = (g == "stone" and ns.STONES) or (g == "potion" and ns.POTIONS) or ns.BANDAGES
         local id = E.Strongest(list, g == "bandage" and Usable or nil)
-        if id then out[#out + 1] = { kind = "item", id = id, group = g } end
+        if id then
+          out[#out + 1] = { kind = "item", id = id, group = g }
+        elseif not db.locked then
+          out[#out + 1] = { kind = "placeholder", group = g } -- unlocked: show where it will be
+        end
       else
         local book = E.BookByName()
         local list = {}
@@ -140,9 +144,13 @@ function ns.ApplyPosition()
   end
 end
 
+-- kept by the top left corner (as in the series): when icons come or go, the first icon and
+-- the bar stay where they were dropped
 function ns.SavePosition()
-  local point, _, rel, x, y = H.frame:GetPoint()
-  if point then db.point = { point, "UIParent", rel or point, x or 0, y or 0 } end
+  local l, t = H.frame:GetLeft(), H.frame:GetTop()
+  if not (l and t) then return end
+  db.point = { "TOPLEFT", "UIParent", "BOTTOMLEFT", l, t }
+  ns.ApplyPosition()
 end
 
 function ns.ResetPosition()
@@ -153,7 +161,7 @@ end
 function ns.SetLocked(on)
   db.locked = on and true or false
   H.SetUnlocked(not db.locked)
-  ns.UpdateVisibility()
+  ns.Relayout() -- unlocked: empty groups show as grey placeholders
   if ns.RefreshOptions then ns.RefreshOptions() end
 end
 
@@ -176,7 +184,9 @@ end
 
 function ns.UpdateVisibility()
   if not H.frame then return end
-  H.frame:SetShown(ns.ShouldShow())
+  local show = ns.ShouldShow()
+  if show and not H.frame:IsShown() then H.ResetShadow() end
+  H.frame:SetShown(show)
 end
 
 -- the tick -----------------------------------------------------------------------------------
@@ -196,6 +206,12 @@ function ns.Tick(now)
   st.tankLost = st.role == "tank" and TankLost() or false
   st.line = E.Line(db, st.role or "dps", st.mobOnMe)
   if st.bandagedUntil and st.bandagedUntil <= now then st.bandagedUntil = nil end
+  -- out of combat the bandage debuff is readable: it also counts a bandage from someone else
+  if not st.inCombat and C_UnitAuras and C_UnitAuras.GetPlayerAuraBySpellID then
+    local a = E.Call(C_UnitAuras.GetPlayerAuraBySpellID, ns.RECENTLY_BANDAGED)
+    local exp = type(a) == "table" and a.expirationTime
+    if type(exp) == "number" and not E.IsSecret(exp) and exp > now then st.bandagedUntil = exp end
+  end
   H.Update(db, st)
 end
 
@@ -372,4 +388,29 @@ SlashCmdList.FULLHEALTHFOREVER = function(msg)
   else
     ns.Print(L.unknown)
   end
+end
+
+-- the addon menu at the minimap: left-click settings, right-click unlocks the frame to move it
+-- (a second right-click locks it); a tooltip like the other addons of the series
+function FullHealthForever_OnCompartmentClick(_, button)
+  if not db then return end
+  if button == "RightButton" then
+    ns.SetLocked(not db.locked)
+    ns.Print(db.locked and L.locked or L.unlocked)
+  elseif ns.ToggleOptions then
+    ns.ToggleOptions()
+  end
+end
+
+function FullHealthForever_OnCompartmentEnter(_, frame)
+  local a = ns.Skin and ns.Skin.ACCENT or { 0.88, 0.2, 0.24 }
+  GameTooltip:SetOwner(frame or UIParent, "ANCHOR_LEFT")
+  GameTooltip:AddDoubleLine(L.addonName, "v" .. ns.VERSION, a[1], a[2], a[3], 1, 0.82, 0)
+  GameTooltip:AddDoubleLine(L.cmpLeft, L.cmpSettings, 1, 0.82, 0, 1, 1, 1)
+  GameTooltip:AddDoubleLine(L.cmpRight, L.cmpMove, 1, 0.82, 0, 1, 1, 1)
+  GameTooltip:Show()
+end
+
+function FullHealthForever_OnCompartmentLeave()
+  GameTooltip:Hide()
 end

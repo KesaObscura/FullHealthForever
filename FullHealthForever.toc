@@ -10,8 +10,11 @@
 ## Notes-koKR: 들어오는 치유와 보호막이 보이는 생명력 바. 생명석, 치유 물약, 붕대, 방어 주문은 진짜 위험할 때만 켜집니다: 생명력이 낮고 시전 중인 치유로도 부족할 때.
 ## Notes-zhCN: 显示即将到来的治疗和护盾的生命条。治疗石、治疗药水、绷带或防御技能只在真正危险时亮起：血量低且正在施放的治疗救不回来。
 ## Notes-zhTW: 顯示即將到來的治療和護盾的生命條。治療石、治療藥水、繃帶或防禦技能只在真正危險時亮起：血量低且正在施放的治療救不回來。
-## Version: 0.1.0
+## Version: 0.1.2
 ## IconTexture: Interface\AddOns\FullHealthForever\icon
+## AddonCompartmentFunc: FullHealthForever_OnCompartmentClick
+## AddonCompartmentFuncOnEnter: FullHealthForever_OnCompartmentEnter
+## AddonCompartmentFuncOnLeave: FullHealthForever_OnCompartmentLeave
 ## SavedVariables: FullHealthForeverDB
 ## Author: KesaObscura
 ## X-License: MIT

@@ -1,5 +1,24 @@
 # Changelog
 
+**Full Health Forever 0.1.2**
+
+Like Full Mana Forever:
+- **Unlocked frame**: a thin edge, the name above it and two buttons, **Lock** and **Settings**;
+  drag the frame itself. Groups with nothing in your bags show a grey placeholder, so you see
+  where their icon goes. The frame keeps its top left corner where you dropped it.
+- **Settings window**: the version in the title, the profile at the top, the language and the
+  buttons in a row at the bottom; *Unlock frame (test mode)* instead of *Lock frame*.
+
+Fixed:
+- Out of combat only a bandage may light up; a potion, healthstone or defensive no longer lights
+  up after a fight (with *Show only in combat* switched off).
+- A bandage someone else put on you also counts for the 60 seconds.
+
+**Full Health Forever 0.1.1**
+
+- In the addon menu at the minimap: left-click opens the settings, right-click lets you move
+  the frame (a second right-click locks it again).
+
 **Full Health Forever 0.1.0**
 
 The first version.

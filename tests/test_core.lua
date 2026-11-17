@@ -45,7 +45,7 @@ test("login: frame built, icons in the dps order, hidden out of combat", functio
   eq(H.frame:IsShown(), false, "only in combat by default")
   M.combat(true)
   eq(H.frame:IsShown(), true, "shown in combat")
-  ok(chatHas("Full Health Forever 0.1.0"), "welcome once")
+  ok(chatHas("Full Health Forever 0.1.2"), "welcome once")
 end)
 
 test("danger: below the line with a mob on you lights the potion; above it does not", function()
@@ -192,7 +192,8 @@ test("visibility: unlocked always, dead never, solo switched off", function()
   local ns, S = setup()
   SlashCmdList.FULLHEALTHFOREVER("unlock")
   eq(ns.HUD.frame:IsShown(), true, "unlocked out of combat")
-  ok(ns.HUD.drag:IsShown(), "drag handle")
+  ok(ns.HUD.lockBtn:IsShown() and ns.HUD.cfgBtn:IsShown(), "lock and settings buttons")
+  ok(ns.HUD.label:IsShown(), "name above the frame")
   M.combat(true)
   ok(chatHas("Fight started: frame locked"), "auto-lock")
   eq(ns.DB().locked, true)
@@ -246,4 +247,79 @@ test("settings saved: a damaged value is replaced by the default", function()
   M.fire("PLAYER_LOGIN")
   eq(ns.DB().thrAggro, 0.35, "wrong type replaced")
   eq(type(ns.DB().groups), "table", "groups back")
+end)
+
+test("addon menu at the minimap: left settings, right moves the frame, tooltip", function()
+  local ns = setup()
+  local toc = assert(io.open(M.ROOT .. "FullHealthForever.toc")):read("*a")
+  ok(toc:find("AddonCompartmentFunc: FullHealthForever_OnCompartmentClick"), "in the TOC")
+  FullHealthForever_OnCompartmentClick("FullHealthForever", "LeftButton")
+  eq(ns.optionsOpen, true, "settings open")
+  ns.OptionsWindow():Hide()
+  FullHealthForever_OnCompartmentClick("FullHealthForever", "RightButton")
+  eq(ns.DB().locked, false, "unlocked")
+  eq(ns.HUD.frame:IsShown(), true, "frame shown to move it")
+  FullHealthForever_OnCompartmentClick("FullHealthForever", "RightButton")
+  eq(ns.DB().locked, true, "locked again")
+  local lines = {}
+  GameTooltip.AddDoubleLine = function(_, a, b) lines[#lines + 1] = a .. "|" .. b end
+  FullHealthForever_OnCompartmentEnter(nil, UIParent)
+  eq(lines[1], "Full Health Forever|v" .. ns.VERSION)
+  eq(lines[3], "Right-click|Move the frame")
+end)
+
+test("unlocked like the series: buttons, placeholders for empty groups, kept by the top left", function()
+  M.reset()
+  M.S.items[858] = { count = 1, spell = 440 } -- only a potion; the priest knows no defensive
+  local ns = M.login()
+  local function groups()
+    local t = {}
+    for _, e in ipairs(ns.state.entries) do t[#t + 1] = e.group .. ":" .. e.kind end
+    return table.concat(t, " ")
+  end
+  eq(groups(), "potion:item", "locked: only what is there")
+  FullHealthForever_OnCompartmentClick("FullHealthForever", "RightButton")
+  eq(groups(), "stone:placeholder potion:item bandage:placeholder", "unlocked: where the others go")
+  ok(ns.HUD.frame.scripts.OnDragStart and ns.HUD.frame.scripts.OnEnter, "the frame drags, with a tooltip")
+  ns.HUD.frame.GetLeft = function() return 300 end
+  ns.HUD.frame.GetTop = function() return 500 end
+  ns.HUD.frame.scripts.OnDragStop(ns.HUD.frame)
+  eq(ns.DB().point[1], "TOPLEFT"); eq(ns.DB().point[3], "BOTTOMLEFT"); eq(ns.DB().point[4], 300)
+  M.S.hpPct = 0.1
+  M.tick(0.2)
+  local ph = ns.HUD.slots[1]
+  eq(ph.entry.kind, "placeholder")
+  eq(M.seen(ph.bright), 0, "a placeholder never lights")
+  eq(M.seen(ns.HUD.slots[2].bright), 0, "out of combat a potion never lights")
+  M.combat(true)
+  eq(groups(), "potion:item", "a fight locks it: placeholders gone")
+  M.combat(false)
+  SlashCmdList.FULLHEALTHFOREVER("unlock")
+  ns.HUD.lockBtn.scripts.OnClick(ns.HUD.lockBtn)
+  eq(ns.DB().locked, true)
+end)
+
+test("bandage debuff read out of combat also counts a bandage from someone else", function()
+  M.reset()
+  M.S.items[2581] = { count = 2, spell = 1159 }
+  local ns = M.login()
+  M.S.combat = false
+  _G.C_UnitAuras = { GetPlayerAuraBySpellID = function(id) if id == 11196 then return { expirationTime = M.S.time + 30 } end end }
+  ns.DB().onlyCombat = false
+  ns.UpdateVisibility()
+  M.tick(0.1)
+  ok(ns.state.bandagedUntil and ns.state.bandagedUntil > M.S.time, "locked by the debuff")
+  _G.C_UnitAuras = nil
+end)
+
+test("out of combat only a bandage may light up, never a potion or a healthstone", function()
+  local ns, S = setup()
+  ns.DB().onlyCombat = false
+  ns.UpdateVisibility()
+  S.hpPct, S.threat = 0.10, nil
+  M.tick(0.2)
+  eq(bright(ns, "potion"), 0, "potion out of combat")
+  eq(bright(ns, "stone"), 0, "healthstone out of combat")
+  eq(bright(ns, "defensive"), 0, "defensive out of combat")
+  eq(bright(ns, "bandage"), 1, "bandage after the fight")
 end)
