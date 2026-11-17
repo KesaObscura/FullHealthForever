@@ -151,6 +151,10 @@ add("tipDragWindow",
  "제목을 끌어서 창을 옮깁니다. Esc 키로 닫습니다.",
  "拖动标题以移动窗口。Esc 关闭。",
  "拖動標題以移動視窗。Esc 關閉。")
+add("cmpLeft", "Left-click", "Linksklick", "Левый клик", "Clic izquierdo", "Clic gauche", "Clique esquerdo", "왼쪽 클릭", "左键", "左鍵")
+add("cmpRight", "Right-click", "Rechtsklick", "Правый клик", "Clic derecho", "Clic droit", "Clique direito", "오른쪽 클릭", "右键", "右鍵")
+add("cmpSettings", "Settings", "Einstellungen", "Настройки", "Opciones", "Options", "Opções", "설정", "设置", "設定")
+add("cmpMove", "Move the frame", "Rahmen verschieben", "Передвинуть рамку", "Mover el marco", "Déplacer le cadre", "Mover o quadro", "프레임 이동", "移动框体", "移動框架")
 add("secGeneral", "General", "Allgemein", "Общее", "General", "Général", "Geral", "일반", "常规", "一般")
 add("secDanger", "When to light up", "Wann aufleuchten", "Когда загораться", "Cuándo iluminarse", "Quand s'allumer", "Quando acender", "켜지는 때", "何时亮起", "何時亮起")
 add("secIcons", "Icons", "Symbole", "Иконки", "Iconos", "Icônes", "Ícones", "아이콘", "图标", "圖示")

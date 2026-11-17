@@ -5,7 +5,7 @@ local L = ns.L
 local E = ns.Engine
 local H = ns.HUD
 
-ns.VERSION = "0.1.0"
+ns.VERSION = "0.1.1"
 ns.BUG_URL = "https://github.com/KesaObscura/FullHealthForever/issues"
 
 -- profile defaults
@@ -372,4 +372,29 @@ SlashCmdList.FULLHEALTHFOREVER = function(msg)
   else
     ns.Print(L.unknown)
   end
+end
+
+-- the addon menu at the minimap: left-click settings, right-click unlocks the frame to move it
+-- (a second right-click locks it); a tooltip like the other addons of the series
+function FullHealthForever_OnCompartmentClick(_, button)
+  if not db then return end
+  if button == "RightButton" then
+    ns.SetLocked(not db.locked)
+    ns.Print(db.locked and L.locked or L.unlocked)
+  elseif ns.ToggleOptions then
+    ns.ToggleOptions()
+  end
+end
+
+function FullHealthForever_OnCompartmentEnter(_, frame)
+  local a = ns.Skin and ns.Skin.ACCENT or { 0.88, 0.2, 0.24 }
+  GameTooltip:SetOwner(frame or UIParent, "ANCHOR_LEFT")
+  GameTooltip:AddDoubleLine(L.addonName, "v" .. ns.VERSION, a[1], a[2], a[3], 1, 0.82, 0)
+  GameTooltip:AddDoubleLine(L.cmpLeft, L.cmpSettings, 1, 0.82, 0, 1, 1, 1)
+  GameTooltip:AddDoubleLine(L.cmpRight, L.cmpMove, 1, 0.82, 0, 1, 1, 1)
+  GameTooltip:Show()
+end
+
+function FullHealthForever_OnCompartmentLeave()
+  GameTooltip:Hide()
 end

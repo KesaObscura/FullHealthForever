@@ -37,7 +37,7 @@ casting is not in danger; a mage at 20 % with nobody healing is. Fewer hints, bu
 | Command | What it does |
 | --- | --- |
 | `/fhf` | Help |
-| `/fhf config` | Settings (also in Esc > Options > AddOns) |
+| `/fhf config` | Settings (also in Esc > Options > AddOns and in the addon menu at the minimap) |
 | `/fhf unlock`, `/fhf lock` | Move the frame, then lock it (it locks itself when a fight starts) |
 | `/fhf hold` | No lit icons until the end of the next fight |
 | `/fhf reset` | Frame back to its default place |

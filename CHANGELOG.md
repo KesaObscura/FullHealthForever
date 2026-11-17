@@ -1,5 +1,10 @@
 # Changelog
 
+**Full Health Forever 0.1.1**
+
+- In the addon menu at the minimap: left-click opens the settings, right-click lets you move
+  the frame (a second right-click locks it again).
+
 **Full Health Forever 0.1.0**
 
 The first version.
