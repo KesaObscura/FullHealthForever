@@ -11,7 +11,9 @@ end
 
 local function strings()
   M.reset()
-  return M.load({ "Locale.lua" }).strings
+  local ns = {}
+  assert(loadfile(M.ROOT .. "Locale.lua"))("FullHealthForever", ns)
+  return ns.strings
 end
 
 test("9 languages, each with exactly the English keys and placeholders", function()
@@ -37,22 +39,30 @@ end)
 test("every key used in the code exists, and every key is used", function()
   local en = strings().enUS
   local code = ""
-  for _, f in ipairs({ "Core.lua", "Probe.lua" }) do
+  for _, f in ipairs({ "Core.lua", "HUD.lua", "Options.lua", "Engine.lua" }) do
     local h = assert(io.open(M.ROOT .. f)); code = code .. h:read("*a"); h:close()
   end
   for k in code:gmatch("L%.([%a_][%w_]*)") do ok(en[k], "missing key " .. k) end
-  for k in pairs(en) do ok(code:find("L%." .. k .. "[^%w_]"), "unused key " .. k) end
+  -- keys built at runtime: grp_<group>, tipGrp_<group>, role*, ht*, help* (in a list)
+  for k in pairs(en) do
+    local used = code:find("L%." .. k .. "[^%w_]") or code:find('"' .. k .. '"')
+      or k:match("^grp_") or k:match("^tipGrp_")
+    ok(used, "unused key " .. k)
+  end
 end)
 
 test("the game language picks the table, esMX falls back to esES, unknown to English", function()
-  M.reset({ locale = "ruRU" })
-  local ns = M.load({ "Locale.lua" })
+  local function loc(code)
+    M.reset({ locale = code })
+    local ns = {}
+    assert(loadfile(M.ROOT .. "Locale.lua"))("FullHealthForever", ns)
+    return ns
+  end
+  local ns = loc("ruRU")
   eq(ns.L.unknown, ns.strings.ruRU.unknown)
-  M.reset({ locale = "esMX" })
-  ns = M.load({ "Locale.lua" })
+  ns = loc("esMX")
   eq(ns.L.unknown, ns.strings.esES.unknown)
-  M.reset({ locale = "itIT" })
-  ns = M.load({ "Locale.lua" })
+  ns = loc("itIT")
   eq(ns.L.unknown, ns.strings.enUS.unknown)
 end)
 
@@ -60,6 +70,10 @@ test("TOC: Notes in every language, version matches ns.VERSION", function()
   M.reset()
   local ns = M.load()
   local h = assert(io.open(M.ROOT .. "FullHealthForever.toc")); local toc = h:read("*a"); h:close()
+  for line in toc:gmatch("[^\r\n]+") do
+    if line:match("%.lua$") then ok(io.open(M.ROOT .. line), "TOC file exists: " .. line) end
+  end
+  ok(toc:find("## SavedVariables: FullHealthForeverDB"), "saved variables")
   for _, lang in ipairs(LANGS) do
     if lang ~= "enUS" then ok(toc:find("## Notes%-" .. lang .. ":"), "TOC misses Notes-" .. lang) end
   end

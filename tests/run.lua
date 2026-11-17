@@ -7,7 +7,7 @@ function T.eq(a, b, msg) if a ~= b then error((msg or "") .. " expected " .. tos
 function T.ok(v, msg) if not v then error(msg or "expected true", 2) end end
 _G.T = T
 local dir = arg[0]:match("^(.*)run%.lua$") or "./"
-for _, f in ipairs({ "test_locale.lua", "test_probe.lua" }) do
+for _, f in ipairs({ "test_locale.lua", "test_core.lua", "test_options.lua" }) do
   assert(loadfile(dir .. f))()
 end
 for _, t in ipairs(tests) do
