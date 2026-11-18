@@ -1,5 +1,10 @@
 # Changelog
 
+**Full Health Forever 0.1.3**
+
+- New icon in the addon list: the red flask in the same style as Full Mana Forever and Last
+  Breath Forever.
+
 **Full Health Forever 0.1.2**
 
 Like Full Mana Forever:
