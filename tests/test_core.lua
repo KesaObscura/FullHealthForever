@@ -45,7 +45,7 @@ test("login: frame built, icons in the dps order, hidden out of combat", functio
   eq(H.frame:IsShown(), false, "only in combat by default")
   M.combat(true)
   eq(H.frame:IsShown(), true, "shown in combat")
-  ok(chatHas("Full Health Forever 0.1.2"), "welcome once")
+  ok(chatHas("Full Health Forever 0.1.3"), "welcome once")
 end)
 
 test("danger: below the line with a mob on you lights the potion; above it does not", function()

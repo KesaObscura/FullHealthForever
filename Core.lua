@@ -5,7 +5,7 @@ local L = ns.L
 local E = ns.Engine
 local H = ns.HUD
 
-ns.VERSION = "0.1.2"
+ns.VERSION = "0.1.3"
 ns.BUG_URL = "https://github.com/KesaObscura/FullHealthForever/issues"
 
 -- profile defaults
